@@ -12,7 +12,8 @@
                 <debug>1</debug>
                 <active>0</active>
                 <model>Oxipay-Payment-Gateway-Facade</model>
-                <merchant_gateway_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <merchant_number backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+				<api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize</payment_action>
                 <title>Payment method (Oxipay)</title>

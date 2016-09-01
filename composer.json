@@ -1,6 +1,6 @@
 {
     "name": "oxipay/module-oxipay-payment-pateway",
-    "description": "Demonstrates integration with payment gateway",
+    "description": "Oxipay Payment Gateway",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0",
         "magento/module-sales": "100.0.*",

@@ -22,7 +22,7 @@ class CaptureRequestTest extends \PHPUnit_Framework_TestCase
         $expectation = [
             'TXN_TYPE' => 'S',
             'TXN_ID' => $txnId,
-            'MERCHANT_KEY' => $merchantToken
+            'MERCHANT_NUMBER' => $merchantToken
         ];
 
         $configMock = $this->getMock(ConfigInterface::class);
@@ -49,7 +49,7 @@ class CaptureRequestTest extends \PHPUnit_Framework_TestCase
 
         $configMock->expects(static::once())
             ->method('getValue')
-            ->with('merchant_gateway_key', $storeId)
+            ->with('merchant_number', $storeId)
             ->willReturn($merchantToken);
 
         /** @var ConfigInterface $configMock */
