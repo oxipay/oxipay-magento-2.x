@@ -8,15 +8,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <sample_gateway>
+            <oxipay_gateway>
                 <debug>1</debug>
                 <active>0</active>
-                <model>SamplePaymentGatewayFacade</model>
+                <model>Oxipay-Payment-Gateway-Facade</model>
                 <merchant_gateway_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize</payment_action>
-                <title>Payment method (SampleGateway)</title>
-                <currency>USD</currency>
+                <title>Payment method (Oxipay)</title>
+                <currency>AUD</currency>
                 <can_authorize>1</can_authorize>
                 <can_capture>1</can_capture>
                 <can_void>1</can_void>
@@ -26,7 +26,7 @@
                 <debugReplaceKeys>MERCHANT_KEY</debugReplaceKeys>
                 <paymentInfoKeys>FRAUD_MSG_LIST</paymentInfoKeys>
                 <privateInfoKeys>FRAUD_MSG_LIST</privateInfoKeys>
-            </sample_gateway>
+            </oxipay_gateway>
         </payment>
     </default>
 </config>

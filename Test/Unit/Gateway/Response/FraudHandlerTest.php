@@ -3,11 +3,11 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Test\Unit\Gateway\Response;
+namespace Oxipay\Oxipay-Payment-Gateway\Test\Unit\Gateway\Response;
 
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
+use Oxipay\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Sales\Model\Order\Payment;
-use Magento\SamplePaymentGateway\Gateway\Response\FraudHandler;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Response\FraudHandler;
 
 class FraudHandlerTest extends \PHPUnit_Framework_TestCase
 {

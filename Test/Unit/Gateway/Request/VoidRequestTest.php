@@ -3,13 +3,13 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Test\Unit\Gateway\Request;
+namespace Oxipay\Oxipay-Payment-Gateway\Test\Unit\Gateway\Request;
 
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Sales\Model\Order\Payment;
-use Magento\SamplePaymentGateway\Gateway\Request\VoidRequest;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Request\VoidRequest;
 
 class VoidRequestTest extends \PHPUnit_Framework_TestCase
 {

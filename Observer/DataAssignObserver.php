@@ -3,7 +3,7 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Observer;
+namespace Oxipay\Oxipay-Payment-Gateway\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;

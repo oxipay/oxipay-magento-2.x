@@ -3,11 +3,11 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Gateway\Validator;
+namespace Oxipay\Oxipay-Payment-Gateway\Gateway\Validator;
 
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Magento\Payment\Gateway\Validator\ResultInterface;
-use Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock;
 
 class ResponseCodeValidator extends AbstractValidator
 {

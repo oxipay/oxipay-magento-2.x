@@ -3,10 +3,10 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Test\Unit\Model\Adminhtml\Source;
+namespace Oxipay\Oxipay-Payment-Gateway\Test\Unit\Model\Adminhtml\Source;
 
 use Magento\Payment\Model\Method\AbstractMethod;
-use Magento\SamplePaymentGateway\Model\Adminhtml\Source\PaymentAction;
+use Oxipay\Oxipay-Payment-Gateway\Model\Adminhtml\Source\PaymentAction;
 
 class PaymentActionTest extends \PHPUnit_Framework_TestCase
 {

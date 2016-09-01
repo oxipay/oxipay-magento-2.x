@@ -8,8 +8,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="payment">
-            <group id="sample_gateway" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Sample Gateway</label>
+            <group id="oxipay_gateway" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Oxipay Gateway</label>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -27,7 +27,7 @@
                 </field>
                 <field id="payment_action" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Payment Action</label>
-                    <source_model>Magento\SamplePaymentGateway\Model\Adminhtml\Source\PaymentAction</source_model>
+                    <source_model>Oxipay\Oxipay-Payment-Gateway\Model\Adminhtml\Source\PaymentAction</source_model>
                 </field>
                 <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="9"
                        showInWebsite="1" showInStore="0">

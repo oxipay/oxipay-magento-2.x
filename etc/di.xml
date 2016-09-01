@@ -8,135 +8,135 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- Payment Method Facade configuration -->
-    <virtualType name="SamplePaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+    <virtualType name="Oxipay-Payment-Gateway-Facade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">\Magento\SamplePaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="code" xsi:type="const">\Oxipay\Oxipay-Payment-Gateway\Model\Ui\ConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">Magento\SamplePaymentGateway\Block\Info</argument>
-            <argument name="valueHandlerPool" xsi:type="object">SamplePaymentGatewayValueHandlerPool</argument>
-            <argument name="commandPool" xsi:type="object">SamplePaymentGatewayCommandPool</argument>
+            <argument name="infoBlockType" xsi:type="string">Oxipay\Oxipay-Payment-Gateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Oxipay-Payment-Gateway-ValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">Oxipay-Payment-Gateway-CommandPool</argument>
         </arguments>
     </virtualType>
 
     <!-- Configuration reader -->
-    <virtualType name="SamplePaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+    <virtualType name="Oxipay-Payment-Gateway-Config" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">\Magento\SamplePaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="methodCode" xsi:type="const">\Magento\Oxipay-Payment-Gateway\Model\Ui\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
-    <!-- Logger, initialized with SamplePaymentGatewayConfig -->
-    <virtualType name="SamplePaymentGatewayLogger" type="Magento\Payment\Model\Method\Logger">
+    <!-- Logger, initialized with Oxipay-Payment-Gateway-Config -->
+    <virtualType name="Oxipay-Payment-Gateway-Logger" type="Magento\Payment\Model\Method\Logger">
         <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </virtualType>
 
-    <type name="Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock">
+    <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock">
         <arguments>
-            <argument name="logger" xsi:type="object">SamplePaymentGatewayLogger</argument>
+            <argument name="logger" xsi:type="object">Oxipay-Payment-Gateway-Logger</argument>
         </arguments>
     </type>
 
     <!-- Commands infrastructure -->
-    <virtualType name="SamplePaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+    <virtualType name="Oxipay-Payment-Gateway-CommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="authorize" xsi:type="string">SamplePaymentGatewayAuthorizeCommand</item>
-                <item name="capture" xsi:type="string">SamplePaymentGatewayCaptureCommand</item>
-                <item name="void" xsi:type="string">SamplePaymentGatewayVoidCommand</item>
+                <item name="authorize" xsi:type="string">Oxipay-Payment-Gateway-AuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Oxipay-Payment-Gateway-CaptureCommand</item>
+                <item name="void" xsi:type="string">Oxipay-Payment-Gateway-VoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
 
     <!-- Authorize command -->
-    <virtualType name="SamplePaymentGatewayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="Oxipay-Payment-Gateway-AuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">SamplePaymentGatewayAuthorizationRequest</argument>
-            <argument name="handler" xsi:type="object">SamplePaymentGatewayResponseHandlerComposite</argument>
-            <argument name="transferFactory" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Oxipay-Payment-Gateway-AuthorizationRequest</argument>
+            <argument name="handler" xsi:type="object">Oxipay-Payment-Gateway-ResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Authorization Request -->
-    <virtualType name="SamplePaymentGatewayAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+    <virtualType name="Oxipay-Payment-Gateway-AuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
             <argument name="builders" xsi:type="array">
-                <item name="transaction" xsi:type="string">Magento\SamplePaymentGateway\Gateway\Request\AuthorizationRequest</item>
-                <item name="mockData" xsi:type="string">Magento\SamplePaymentGateway\Gateway\Request\MockDataRequest</item>
+                <item name="transaction" xsi:type="string">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\AuthorizationRequest</item>
+                <item name="mockData" xsi:type="string">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\MockDataRequest</item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Magento\SamplePaymentGateway\Gateway\Request\AuthorizationRequest">
+    <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Request\AuthorizationRequest">
         <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </type>
 
     <!-- Capture command -->
-    <virtualType name="SamplePaymentGatewayCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="Oxipay-Payment-Gateway-CaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Request\CaptureRequest</argument>
-            <argument name="handler" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Response\TxnIdHandler</argument>
-            <argument name="transferFactory" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="validator" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Validator\ResponseCodeValidator</argument>
-            <argument name="client" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\CaptureRequest</argument>
+            <argument name="handler" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Capture Request -->
-    <type name="Magento\SamplePaymentGateway\Gateway\Request\CaptureRequest">
+    <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Request\CaptureRequest">
         <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </type>
 
     <!-- Void command -->
-    <virtualType name="SamplePaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="Oxipay-Payment-Gateway-VoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Request\VoidRequest</argument>
-            <argument name="handler" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Response\TxnIdHandler</argument>
-            <argument name="transferFactory" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="validator" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Validator\ResponseCodeValidator</argument>
-            <argument name="client" xsi:type="object">Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\VoidRequest</argument>
+            <argument name="handler" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Void Request -->
-    <type name="Magento\SamplePaymentGateway\Gateway\Request\VoidRequest">
+    <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Request\VoidRequest">
         <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </type>
 
     <!-- Response handlers -->
-    <virtualType name="SamplePaymentGatewayResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+    <virtualType name="Oxipay-Payment-Gateway-ResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
         <arguments>
             <argument name="handlers" xsi:type="array">
-                <item name="txnid" xsi:type="string">Magento\SamplePaymentGateway\Gateway\Response\TxnIdHandler</item>
-                <item name="fraud" xsi:type="string">Magento\SamplePaymentGateway\Gateway\Response\FraudHandler</item>
+                <item name="txnid" xsi:type="string">Oxipay\Oxipay-Payment-Gateway\Gateway\Response\TxnIdHandler</item>
+                <item name="fraud" xsi:type="string">Oxipay\Oxipay-Payment-Gateway\Gateway\Response\FraudHandler</item>
             </argument>
         </arguments>
     </virtualType>
 
     <!-- Value handlers infrastructure -->
-    <virtualType name="SamplePaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+    <virtualType name="Oxipay-Payment-Gateway-ValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
         <arguments>
             <argument name="handlers" xsi:type="array">
-                <item name="default" xsi:type="string">SamplePaymentGatewayConfigValueHandler</item>
+                <item name="default" xsi:type="string">Oxipay-Payment-Gateway-ConfigValueHandler</item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="SamplePaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+    <virtualType name="Oxipay-Payment-Gateway-ConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
-            <argument name="configInterface" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="configInterface" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </virtualType>
 
-    <type name="Magento\SamplePaymentGateway\Block\Info">
+    <type name="Oxipay\Oxipay-Payment-Gateway\Block\Info">
         <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </type>
 

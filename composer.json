@@ -1,5 +1,5 @@
 {
-    "name": "magento/module-sample-payment-gateway",
+    "name": "oxipay/module-oxipay-payment-pateway",
     "description": "Demonstrates integration with payment gateway",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0",
@@ -18,7 +18,7 @@
     "autoload": {
         "files": [ "registration.php" ],
         "psr-4": {
-            "Magento\\SamplePaymentGateway\\": ""
+            "Oxipay\\Oxipay-Payment-Gateway\\": ""
         }
     }
 }

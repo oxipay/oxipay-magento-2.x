@@ -16,8 +16,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'sample_gateway',
-                component: 'Magento_SamplePaymentGateway/js/view/payment/method-renderer/sample_gateway'
+                type: 'oxipay_gateway',
+                component: 'Oxipay_Oxipay-Payment-Gateway/js/view/payment/method-renderer/oxipay_gateway'
             }
         );
         /** Add view logic here if needed */

@@ -3,12 +3,12 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Test\Unit\Gateway\Validator;
+namespace Oxipay\Oxipay-Payment-Gateway\Test\Unit\Gateway\Validator;
 
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
-use Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock;
-use Magento\SamplePaymentGateway\Gateway\Validator\ResponseCodeValidator;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Validator\ResponseCodeValidator;
 
 class ResponseCodeValidatorTest extends \PHPUnit_Framework_TestCase
 {

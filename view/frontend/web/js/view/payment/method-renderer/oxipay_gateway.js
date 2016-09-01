@@ -13,7 +13,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Magento_SamplePaymentGateway/payment/form',
+                template: 'Oxipay_Oxipay-Payment-Gateway/payment/form',
                 transactionResult: ''
             },
 
@@ -27,7 +27,7 @@ define(
             },
 
             getCode: function() {
-                return 'sample_gateway';
+                return 'oxipay_gateway';
             },
 
             getData: function() {
@@ -40,7 +40,7 @@ define(
             },
 
             getTransactionResults: function() {
-                return _.map(window.checkoutConfig.payment.sample_gateway.transactionResults, function(value, key) {
+                return _.map(window.checkoutConfig.payment.oxipay_gateway.transactionResults, function(value, key) {
                     return {
                         'value': key,
                         'transaction_result': value

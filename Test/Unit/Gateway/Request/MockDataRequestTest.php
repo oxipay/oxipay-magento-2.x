@@ -3,13 +3,13 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Test\Unit\Gateway\Request;
+namespace Oxipay\Oxipay-Payment-Gateway\Test\Unit\Gateway\Request;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Sales\Model\Order\Payment;
-use Magento\SamplePaymentGateway\Gateway\Http\Client\ClientMock;
-use Magento\SamplePaymentGateway\Gateway\Request\MockDataRequest;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Http\Client\ClientMock;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Request\MockDataRequest;
 
 class MockDataRequestTest extends \PHPUnit_Framework_TestCase
 {

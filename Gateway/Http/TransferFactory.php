@@ -3,12 +3,12 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SamplePaymentGateway\Gateway\Http;
+namespace Oxipay\Oxipay-Payment-Gateway\Gateway\Http;
 
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Magento\SamplePaymentGateway\Gateway\Request\MockDataRequest;
+use Oxipay\Oxipay-Payment-Gateway\Gateway\Request\MockDataRequest;
 
 class TransferFactory implements TransferFactoryInterface
 {
