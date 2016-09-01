@@ -43,8 +43,8 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="authorize" xsi:type="string">Oxipay-Payment-Gateway-AuthorizeCommand</item>
-                <item name="capture" xsi:type="string">Oxipay-Payment-Gateway-CaptureCommand</item>
-                <item name="void" xsi:type="string">Oxipay-Payment-Gateway-VoidCommand</item>
+<!--                 <item name="capture" xsi:type="string">Oxipay-Payment-Gateway-CaptureCommand</item>
+                <item name="void" xsi:type="string">Oxipay-Payment-Gateway-VoidCommand</item> -->
             </argument>
         </arguments>
     </virtualType>
@@ -74,7 +74,8 @@
         </arguments>
     </type>
 
-    <!-- Capture command -->
+   <!--  
+   
     <virtualType name="Oxipay-Payment-Gateway-CaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\CaptureRequest</argument>
@@ -85,14 +86,14 @@
         </arguments>
     </virtualType>
 
-    <!-- Capture Request -->
+    
     <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Request\CaptureRequest">
         <arguments>
             <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
     </type>
 
-    <!-- Void command -->
+    
     <virtualType name="Oxipay-Payment-Gateway-VoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Oxipay\Oxipay-Payment-Gateway\Gateway\Request\VoidRequest</argument>
@@ -103,12 +104,12 @@
         </arguments>
     </virtualType>
 
-    <!-- Void Request -->
+    
     <type name="Oxipay\Oxipay-Payment-Gateway\Gateway\Request\VoidRequest">
         <arguments>
             <argument name="config" xsi:type="object">Oxipay-Payment-Gateway-Config</argument>
         </arguments>
-    </type>
+    </type> -->
 
     <!-- Response handlers -->
     <virtualType name="Oxipay-Payment-Gateway-ResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
