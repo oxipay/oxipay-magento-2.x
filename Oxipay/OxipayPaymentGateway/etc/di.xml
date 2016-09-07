@@ -32,7 +32,7 @@
         </arguments>
     </virtualType>
 
-    <type name="Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ClientMock">
+    <type name="Oxipay\OxipayPaymentGateway\Gateway\Http\Client\OxipayClient">
         <arguments>
             <argument name="logger" xsi:type="object">OxipayPaymentGatewayLogger</argument>
         </arguments>
@@ -55,7 +55,7 @@
             <argument name="requestBuilder" xsi:type="object">OxipayPaymentGatewayAuthorizationRequest</argument>
             <argument name="handler" xsi:type="object">OxipayPaymentGatewayResponseHandlerComposite</argument>
             <argument name="transferFactory" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="client" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="client" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\Client\OxipayClient</argument>
         </arguments>
     </virtualType>
 
