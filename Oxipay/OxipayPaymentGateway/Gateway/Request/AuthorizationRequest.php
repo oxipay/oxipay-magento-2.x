@@ -42,10 +42,45 @@ class AuthorizationRequest implements BuilderInterface
         /** @var PaymentDataObjectInterface $payment */
         $payment = $buildSubject['payment'];
         $order = $payment->getOrder();
-        $address = $order->getShippingAddress();
+        $shippingaddress = $order->getShippingAddress();
+		$billingaddress = $order->getBillingAddress();
 
+		/*
+		 * Required fields
+		 * First Name
+		 * Last Name
+		 * Email
+		 * Mobile
+		 * Shipping Address
+		 * Shipping Suburb
+		 * Shipping State
+		 * Shipping Postcode
+		 * Billing Address
+		 * Billing Suburb
+		 * Billing State
+		 * Billing Postcode
+		 * Total value
+		 */
+		
         return [
-            'TXN_TYPE' => 'A',
+			'MERCHANT_NUMBER' => $this->config->getValue(
+                'merchant_number',
+                $order->getStoreId()),
+			'FIRSTNAME' => $order->getCustomerFirstName(),
+			'LASTNAME' => $order->getCustomerLastName(),
+			'EMAIL' => $billingaddress->getEmail(),
+			'MOBILE' => $billingaddress->getTelephone(),
+			'SHIPPINGADDRESS' => $shippingaddress->getStreet(),
+			'SHIPPINGSUBURB' => $shippingaddress->getCity(),
+			'SHIPPINGSTATE' => $shippingaddress->getRegion(),
+			'SHIPPINGPOSTCODE' => $shippingaddress->getPostcode(),
+			'BILLINGADDRESS' => $billingaddress->getStreet(),
+			'BILLINGSUBURB' => $billingaddress->getCity(),
+			'BILLINGSTATE' => $billingaddress->getRegion(),
+			'BILLINGPOSTCODE' => $billingaddress->getPostcode(),
+			'AMOUNT' => $order->getGrandTotalAmount()
+			
+            /*'TXN_TYPE' => 'A',
             'INVOICE' => $order->getOrderIncrementId(),
             'AMOUNT' => $order->getGrandTotalAmount(),
             'CURRENCY' => $order->getCurrencyCode(),
@@ -53,7 +88,7 @@ class AuthorizationRequest implements BuilderInterface
             'MERCHANT_NUMBER' => $this->config->getValue(
                 'merchant_number',
                 $order->getStoreId()
-            )
+            )*/
         ];
     }
 }
