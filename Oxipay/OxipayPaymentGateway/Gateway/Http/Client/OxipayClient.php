@@ -52,12 +52,9 @@ class OxipayClient implements ClientInterface
     {
 		$client = $clientFactory->create();
 		$client->setUri(self::OXIPAY_URL);
-		$client->setHeaders(['Content-Type: application/json']);
-		$client->setMethod(\Zend_Http_Client::POST);
-		
-		$jsontext = json_encode($transferObject->getBody());
-		
-		$client->setRawData($jsontext);
+		$client->setMethod($transferObject->getMethod());
+		$client->setHeaders($transferObject->getHeaders());
+		$client->setRawData($transferObject->getBody());
 		
 		/* Body contains the JSON request string */
         $response = $this->generateResponseForCode(

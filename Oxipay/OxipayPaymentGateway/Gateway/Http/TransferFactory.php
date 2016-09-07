@@ -8,7 +8,7 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Oxipay\OxipayPaymentGateway\Gateway\Request\MockDataRequest;
+namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
 
 class TransferFactory implements TransferFactoryInterface
 {
@@ -16,14 +16,22 @@ class TransferFactory implements TransferFactoryInterface
      * @var TransferBuilder
      */
     private $transferBuilder;
+	
+	/**
+	 * @var $crypto
+	 */
+	private $crypto;
 
     /**
      * @param TransferBuilder $transferBuilder
+	 * @param AuthorizationRequestCrypto crypto
      */
     public function __construct(
         TransferBuilder $transferBuilder
+		AuthorizationRequestCrypto $crypto
     ) {
         $this->transferBuilder = $transferBuilder;
+		$this->crypto = $crypto
     }
 
     /**
@@ -34,16 +42,13 @@ class TransferFactory implements TransferFactoryInterface
      */
     public function create(array $request)
     {
+		$signed = $this->crypto->sign($request);
+		$jsontext = json_encode($signed);
+		
         return $this->transferBuilder
-            ->setBody($request)
+            ->setBody($jsontext)
             ->setMethod('POST')
-            ->setHeaders(
-                [
-                    'force_result' => isset($request[MockDataRequest::FORCE_RESULT])
-                        ? $request[MockDataRequest::FORCE_RESULT]
-                        : null
-                ]
-            )
+			->setHeaders(['Content-Type: application/json'])
             ->build();
     }
 }
