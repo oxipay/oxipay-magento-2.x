@@ -3,9 +3,9 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
+namespace Oxipay\OxipayPaymentGateway\Gateway\Crypto;
 
-class AuthorizationRequestCrypto
+class OxipayCrypto
 {
     /**
      * Signs authRequest.
