@@ -16,22 +16,15 @@ class TransferFactory implements TransferFactoryInterface
      * @var TransferBuilder
      */
     private $transferBuilder;
-	
-	/**
-	 * @var $crypto
-	 */
-	private $crypto;
 
     /**
      * @param TransferBuilder $transferBuilder
 	 * @param OxipayCrypto crypto
      */
     public function __construct(
-        TransferBuilder $transferBuilder, 
-		OxipayCrypto $crypto
+        TransferBuilder $transferBuilder
     ) {
         $this->transferBuilder = $transferBuilder;
-		$this->crypto = $crypto;
     }
 
     /**
@@ -42,11 +35,8 @@ class TransferFactory implements TransferFactoryInterface
      */
     public function create(array $request)
     {
-		$signed = $this->crypto->sign($request);
-		$jsontext = json_encode($signed);
-		
         return $this->transferBuilder
-            ->setBody($jsontext)
+            ->setBody($request)
             ->setMethod('POST')
 			->setHeaders(['Content-Type: application/json'])
             ->build();

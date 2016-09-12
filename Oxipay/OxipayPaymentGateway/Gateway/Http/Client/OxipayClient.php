@@ -14,7 +14,7 @@ class OxipayClient implements ClientInterface
 {
     const SUCCESS = 1;
     const FAILURE = 0;
-	const OXIPAY_URL = "https://172.16.0.1/Oxipay?platform=Magento";
+	const OXIPAY_URL = "http://172.16.0.1/Oxipay?platform=Magento";
 
     /**
      * @var array
@@ -36,10 +36,10 @@ class OxipayClient implements ClientInterface
      */
     public function __construct(
         Logger $logger,
-		ZendClientFactory $clientFactory
+        ZendClientFactory $clientFactory
     ) {
         $this->logger = $logger;
-		$this->clientFactory = $clientFactory;
+        $this->clientFactory = $clientFactory;
     }
 
     /**
@@ -50,18 +50,20 @@ class OxipayClient implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-		$client = $clientFactory->create();
-		$client->setUri(self::OXIPAY_URL);
-		$client->setMethod($transferObject->getMethod());
-		$client->setHeaders($transferObject->getHeaders());
-		$client->setRawData($transferObject->getBody());
+        
+        $headers = $transferObject->getHeaders();
+        $body = json_encode($transferObject->getBody());
+        $method = $transferObject->getMethod();
+        
+        $client = $this->clientFactory->create();
+        $client->setUri(self::OXIPAY_URL);
+        $client->setMethod($method);
+        $client->setHeaders($headers);
+        $client->setRawData($body);
 		
-		/* Body contains the JSON request string */
-        $response = $this->generateResponseForCode(
-            $this->getResultCode(
-                $transferObject
-            )
-        );
+        /* Body contains the JSON request string */
+
+        $response = $client->request($method);
 
         $this->logger->debug(
             [

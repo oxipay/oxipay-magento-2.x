@@ -8,6 +8,7 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
+use Oxipay\OxipayPaymentGateway\Gateway\Http\OxipayCrypto;
 
 class AuthorizationRequest implements BuilderInterface
 {
@@ -15,14 +16,21 @@ class AuthorizationRequest implements BuilderInterface
      * @var ConfigInterface
      */
     private $config;
+    
+    /**
+     * @var OxipayCrypto
+     */
+    private $crypto;
 
     /**
      * @param ConfigInterface $config
      */
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        OxipayCrypto $crypto
     ) {
         $this->config = $config;
+        $this->crypto = $crypto;
     }
 
     /**
@@ -62,33 +70,32 @@ class AuthorizationRequest implements BuilderInterface
 		 * Total value
 		 */
 		
-        return [
+        $array = [
 			'MERCHANT_NUMBER' => $this->config->getValue(
                 'merchant_number',
                 $order->getStoreId()),
-			'FIRSTNAME' => $order->getCustomerFirstName(),
-			'LASTNAME' => $order->getCustomerLastName(),
+			'FIRSTNAME' => $billingaddress->getFirstname(),
+			'LASTNAME' => $billingaddress->getLastname(),
 			'EMAIL' => $billingaddress->getEmail(),
 			'MOBILE' => $billingaddress->getTelephone(),
-			'SHIPPINGADDRESS' => $shippingaddress->getStreet(),
+			'SHIPPINGADDRESS1' => $shippingaddress->getStreetLine1(),
+			'SHIPPINGADDRESS2' => $shippingaddress->getStreetLine2(),
 			'SHIPPINGSUBURB' => $shippingaddress->getCity(),
-			'SHIPPINGSTATE' => $shippingaddress->getRegion(),
+			'SHIPPINGSTATE' => $shippingaddress->getRegionCode(),
 			'SHIPPINGPOSTCODE' => $shippingaddress->getPostcode(),
-			'BILLINGADDRESS' => $billingaddress->getStreet(),
+			'BILLINGADDRESS1' => $billingaddress->getStreetLine1(),
+			'BILLINGADDRESS2' => $billingaddress->getStreetLine2(),
 			'BILLINGSUBURB' => $billingaddress->getCity(),
-			'BILLINGSTATE' => $billingaddress->getRegion(),
+			'BILLINGSTATE' => $billingaddress->getRegionCode(),
 			'BILLINGPOSTCODE' => $billingaddress->getPostcode(),
 			'AMOUNT' => $order->getGrandTotalAmount()
-			
-            /*'TXN_TYPE' => 'A',
-            'INVOICE' => $order->getOrderIncrementId(),
-            'AMOUNT' => $order->getGrandTotalAmount(),
-            'CURRENCY' => $order->getCurrencyCode(),
-            'EMAIL' => $address->getEmail(),
-            'MERCHANT_NUMBER' => $this->config->getValue(
-                'merchant_number',
-                $order->getStoreId()
-            )*/
         ];
+        
+        $merchantkey = $this->config->getValue(
+                'api_key',
+                $order->getStoreId());
+        $signedarray = $this->crypto->sign($array, $merchantkey);
+                
+        return $signedarray;
     }
 }

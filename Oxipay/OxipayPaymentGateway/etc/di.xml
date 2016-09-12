@@ -31,10 +31,18 @@
             <argument name="config" xsi:type="object">OxipayPaymentGatewayConfig</argument>
         </arguments>
     </virtualType>
+	
+	<!-- HTTP Client -->
+	<virtualType name="Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ZendClientFactory" type="Magento\Framework\HTTP\ZendClientFactory">
+        <arguments>
+            <argument name="timeout" xsi:type="string">60</argument>
+        </arguments>
+    </virtualType>
 
     <type name="Oxipay\OxipayPaymentGateway\Gateway\Http\Client\OxipayClient">
         <arguments>
             <argument name="logger" xsi:type="object">OxipayPaymentGatewayLogger</argument>
+			<argument name="clientFactory" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ZendClientFactory</argument>
         </arguments>
     </type>
 
