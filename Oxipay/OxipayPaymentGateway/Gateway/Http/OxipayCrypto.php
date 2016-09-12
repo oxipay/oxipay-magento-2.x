@@ -3,7 +3,8 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Oxipay\OxipayPaymentGateway\Gateway\Crypto;
+namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
+namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
 
 class OxipayCrypto
 {

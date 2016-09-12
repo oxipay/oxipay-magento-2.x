@@ -8,7 +8,7 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Oxipay\OxipayPaymentGateway\Gateway\Crypto;
+use Oxipay\OxipayPaymentGateway\Gateway\Http\OxipayCrypto;
 
 class TransferFactory implements TransferFactoryInterface
 {
@@ -27,7 +27,7 @@ class TransferFactory implements TransferFactoryInterface
 	 * @param OxipayCrypto crypto
      */
     public function __construct(
-        TransferBuilder $transferBuilder
+        TransferBuilder $transferBuilder, 
 		OxipayCrypto $crypto
     ) {
         $this->transferBuilder = $transferBuilder;
