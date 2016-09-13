@@ -71,24 +71,26 @@ class AuthorizationRequest implements BuilderInterface
 		 */
 		
         $array = [
-			'MERCHANT_NUMBER' => $this->config->getValue(
+			'merchant_number' => $this->config->getValue(
                 'merchant_number',
                 $order->getStoreId()),
-			'FIRSTNAME' => $billingaddress->getFirstname(),
-			'LASTNAME' => $billingaddress->getLastname(),
-			'EMAIL' => $billingaddress->getEmail(),
-			'MOBILE' => $billingaddress->getTelephone(),
-			'SHIPPINGADDRESS1' => $shippingaddress->getStreetLine1(),
-			'SHIPPINGADDRESS2' => $shippingaddress->getStreetLine2(),
-			'SHIPPINGSUBURB' => $shippingaddress->getCity(),
-			'SHIPPINGSTATE' => $shippingaddress->getRegionCode(),
-			'SHIPPINGPOSTCODE' => $shippingaddress->getPostcode(),
-			'BILLINGADDRESS1' => $billingaddress->getStreetLine1(),
-			'BILLINGADDRESS2' => $billingaddress->getStreetLine2(),
-			'BILLINGSUBURB' => $billingaddress->getCity(),
-			'BILLINGSTATE' => $billingaddress->getRegionCode(),
-			'BILLINGPOSTCODE' => $billingaddress->getPostcode(),
-			'AMOUNT' => $order->getGrandTotalAmount()
+			'first_name' => $billingaddress->getFirstname(),
+			'last_name' => $billingaddress->getLastname(),
+			'email' => $billingaddress->getEmail(),
+			'phone' => $billingaddress->getTelephone(),
+			'shipping_address1' => $shippingaddress->getStreetLine1(),
+			'shipping_address2' => $shippingaddress->getStreetLine2(),
+			'shipping_city' => $shippingaddress->getCity(),
+			'shipping_state' => $shippingaddress->getRegionCode(),
+			'shipping_postcode' => $shippingaddress->getPostcode(),
+			'billing_address1' => $billingaddress->getStreetLine1(),
+			'billing_address1' => $billingaddress->getStreetLine2(),
+			'billing_city' => $billingaddress->getCity(),
+			'billing_state' => $billingaddress->getRegionCode(),
+			'billing_postcode' => $billingaddress->getPostcode(),
+			'amount' => $order->getGrandTotalAmount(),
+			'currency' => $order->getCurrencyCode(),
+			'invoice_number' => $order->getOrderIncrementId()
         ];
         
         $merchantkey = $this->config->getValue(
