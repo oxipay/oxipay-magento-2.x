@@ -6,7 +6,7 @@
 namespace Oxipay\OxipayPaymentGateway\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ClientMock;
+use Oxipay\OxipayPaymentGateway\Gateway\Http\Client\OxipayClient;
 
 /**
  * Class ConfigProvider
@@ -26,8 +26,8 @@ final class ConfigProvider implements ConfigProviderInterface
             'payment' => [
                 self::CODE => [
                     'transactionResults' => [
-                        ClientMock::SUCCESS => __('Success'),
-                        ClientMock::FAILURE => __('Fraud')
+                        OxipayClient::SUCCESS => __('Success'),
+                        OxipayClient::FAILURE => __('Failure')
                     ]
                 ]
             ]

@@ -7,7 +7,6 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Validator;
 
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Magento\Payment\Gateway\Validator\ResultInterface;
-use Oxipay\OxipayPaymentGateway\Gateway\Http\Client\ClientMock;
 
 class ResponseCodeValidator extends AbstractValidator
 {
@@ -46,7 +45,6 @@ class ResponseCodeValidator extends AbstractValidator
      */
     private function isSuccessfulTransaction(array $response)
     {
-        return isset($response[self::RESULT_CODE])
-        && $response[self::RESULT_CODE] !== ClientMock::FAILURE;
+        return isset($response[self::RESULT_CODE]);
     }
 }
