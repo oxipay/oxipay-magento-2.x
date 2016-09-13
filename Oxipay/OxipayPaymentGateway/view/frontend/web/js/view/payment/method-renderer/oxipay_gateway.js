@@ -46,13 +46,6 @@ define(
                         'transaction_result': value
                     }
                 });
-            },
-			
-			afterPlaceOrder: function(response) {
-                var data = $.parseJSON(response);
-
-                window.location.href = "http://google.com";
-                }
             }
         });
     }
