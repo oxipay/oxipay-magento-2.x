@@ -14,7 +14,7 @@ class OxipayClient implements ClientInterface
 {
     const SUCCESS = 1;
     const FAILURE = 0;
-	const OXIPAY_URL = "http://172.16.0.1/Oxipay?platform=Magento";
+    const OXIPAY_URL = "http://172.16.0.1/Oxipay?platform=Magento";
 
     /**
      * @var array
