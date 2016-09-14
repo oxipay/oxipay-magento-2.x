@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © 2016 Oxipay
  * See COPYING.txt for license details.
  */
 namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
@@ -22,9 +22,9 @@ class OxipayCrypto
 		}
 				
 		/* Does the source array already have a signature component? If so, strip it. */
-		if (array_key_exists('SIGNATURE', $authRequest))
+		if (array_key_exists('x_signature', $authRequest))
 		{
-			unset($authRequest['SIGNATURE']);
+			unset($authRequest['x_signature']);
 		}
 			
 		/* Prepare array (sort by key, json export) */
@@ -35,7 +35,7 @@ class OxipayCrypto
 		$signature = hash_hmac("sha256", $json, $apikey);
 		
 		/* Append signature onto the end of our array */
-		$authRequest["SIGNATURE"] = $signature;
+		$authRequest["x_signature"] = $signature;
 		
 		return $authRequest;
 	}
