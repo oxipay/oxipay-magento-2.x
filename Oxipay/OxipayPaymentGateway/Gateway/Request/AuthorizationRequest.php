@@ -97,6 +97,10 @@ class AuthorizationRequest implements BuilderInterface
                 'api_key',
                 $order->getStoreId());
         $signedarray = $this->crypto->sign($array, $merchantkey);
+		
+		$signedarray['gateway_url'] = $this->config->getValue(
+                'gateway_url',
+                $order->getStoreId());
                 
         return $signedarray;
     }
