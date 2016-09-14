@@ -14,7 +14,6 @@ class OxipayClient implements ClientInterface
 {
     const SUCCESS = 1;
     const FAILURE = 0;
-	const OXIPAY_URL = "http://172.16.0.1/Oxipay?platform=Magento";
 
     /**
      * @var array
@@ -50,13 +49,15 @@ class OxipayClient implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        
+        $bodyarray = $transferObject->getBody();
         $headers = $transferObject->getHeaders();
-        $body = json_encode($transferObject->getBody());
+		$url = $bodyarray['gateway_url']; 
+		unset($bodyarray['gateway_url']);
+	    $body = json_encode($bodyarray);
         $method = $transferObject->getMethod();
         
         $client = $this->clientFactory->create();
-        $client->setUri(self::OXIPAY_URL);
+        $client->setUri($url);
         $client->setMethod($method);
         $client->setHeaders($headers);
         $client->setRawData($body);
