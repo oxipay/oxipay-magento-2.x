@@ -8,6 +8,7 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Oxipay\OxipayPaymentGateway\Gateway\Http\OxipayCrypto;
 
 class AuthorizationRequest implements BuilderInterface
@@ -52,6 +53,10 @@ class AuthorizationRequest implements BuilderInterface
         $order = $payment->getOrder();
         $shippingaddress = $order->getShippingAddress();
 		$billingaddress = $order->getBillingAddress();
+		
+		$om = \Magento\Framework\App\ObjectManager::getInstance();
+		$manager = $om->get('Magento\Store\Model\StoreManagerInterface');
+		$store = $manager->getStore($order->getStoreId());
 
 		/*
 		 * Required fields
@@ -71,6 +76,7 @@ class AuthorizationRequest implements BuilderInterface
 		 */
 		
         $array = [
+/* 		
 			'merchant_number' => $this->config->getValue(
                 'merchant_number',
                 $order->getStoreId()),
@@ -90,7 +96,34 @@ class AuthorizationRequest implements BuilderInterface
 			'billing_postcode' => $billingaddress->getPostcode(),
 			'amount' => $order->getGrandTotalAmount(),
 			'currency' => $order->getCurrencyCode(),
-			'invoice_number' => $order->getOrderIncrementId()
+			'invoice_number' => $order->getOrderIncrementId() */
+			
+			'x_currency' => $order->getCurrencyCode(),
+			'x_url_complete' => "",
+			'x_url_callback' => "",
+			'x_url_cancel' => "",
+			'x_shop_name' => $store->getName(),
+			'x_account_id' => $this->config->getValue(
+                'merchant_number',
+                $order->getStoreId()),
+			'x_reference' => $order->getOrderIncrementId(),
+			'x_invoice' => $order->getOrderIncrementId(),
+			'x_amount' => $order->getGrandTotalAmount(),
+			'x_customer_first_name' => $billingaddress->getFirstname(),
+			'x_customer_last_name' => $billingaddress->getLastname(),
+			'x_customer_email' => $billingaddress->getEmail(),
+			'x_customer_phone' => $billingaddress->getTelephone(),
+			'x_customer_billing_address1' => $billingaddress->getStreetLine1(),
+			'x_customer_billing_address2' => $billingaddress->getStreetLine2(),
+			'x_customer_billing_city' => $billingaddress->getCity(),
+			'x_customer_billing_state' => $billingaddress->getRegionCode(),
+			'x_customer_billing_zip' => $billingaddress->getPostcode(),
+			'x_customer_shipping_address1' => $shippingaddress->getStreetLine1(),
+			'x_customer_shipping_address2' => $shippingaddress->getStreetLine2(),
+			'x_customer_shipping_city' => $shippingaddress->getCity(),
+			'x_customer_shipping_state' => $shippingaddress->getRegionCode(),
+			'x_customer_shipping_zip' => $shippingaddress->getPostcode(),
+			'x_test' => $this->config->getValue('test_mode', $order->getStoreId())
         ];
         
         $merchantkey = $this->config->getValue(
