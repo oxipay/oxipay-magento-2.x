@@ -69,7 +69,7 @@ class OxipayClient implements ClientInterface
         $this->logger->debug(
             [
                 'request' => $transferObject->getBody(),
-                'response' => $response
+                'response' => gzdecode($response)
             ]
         );
 
