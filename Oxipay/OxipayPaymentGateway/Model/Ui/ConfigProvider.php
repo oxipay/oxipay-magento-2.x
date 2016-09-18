@@ -22,7 +22,7 @@ final class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        return [
+        $config = [
             'payment' => [
                 self::CODE => [
                     'transactionResults' => [
@@ -32,5 +32,9 @@ final class ConfigProvider implements ConfigProviderInterface
                 ]
             ]
         ];
+        
+        $config['payment'][self::CODE]['redirectUrl'] = $this->_urlBuilder->getUrl('Oxipay/OxipayPaymentGateway/start');
+        
+        return $config;
     }
 }

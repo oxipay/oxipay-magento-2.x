@@ -66,7 +66,7 @@ define(
                     function () {
                         customerData.invalidate(['cart']);
                         $.mage.redirect(
-                            window.checkoutConfig.payment.paypalExpress.redirectUrl[quote.paymentMethod().method]
+                            window.checkOutConfig.payment.oxipay_gateway.redirectUrl[quote.paymentMethod().method]
                         );
                     }
                 );
