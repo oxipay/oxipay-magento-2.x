@@ -10,7 +10,7 @@ use Magento\Payment\Gateway\Validator\ResultInterface;
 
 class ResponseCodeValidator extends AbstractValidator
 {
-    const RESULT_CODE = 'RESULT_CODE';
+    const RESULT_CODE = 'TransactionId';
 
     /**
      * Performs validation of result code
@@ -20,12 +20,14 @@ class ResponseCodeValidator extends AbstractValidator
      */
     public function validate(array $validationSubject)
     {
-        if (!isset($validationSubject['response']) || !is_array($validationSubject['response'])) {
+        $response = $validationSubject['response'];        
+        $iset = isset($response);
+        $isar = is_array($response);
+        
+        if (!$iset || !$isar) {
             throw new \InvalidArgumentException('Response does not exist');
         }
-
-        $response = $validationSubject['response'];
-
+        
         if ($this->isSuccessfulTransaction($response)) {
             return $this->createResult(
                 true,

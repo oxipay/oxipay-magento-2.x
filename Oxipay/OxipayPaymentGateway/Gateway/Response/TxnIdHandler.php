@@ -10,7 +10,7 @@ use Magento\Payment\Gateway\Response\HandlerInterface;
 
 class TxnIdHandler implements HandlerInterface
 {
-    const TXN_ID = 'TXN_ID';
+    const TXN_ID = 'TransactionId';
 
     /**
      * Handles transaction id

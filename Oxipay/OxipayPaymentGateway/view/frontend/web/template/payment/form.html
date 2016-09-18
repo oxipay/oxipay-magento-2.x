@@ -14,7 +14,9 @@
             <span data-bind="text: getTitle()"></span>
         </label>
     </div>
-
+	<div class="payment-method-note">
+		You will be redirected to Oxipay to complete your payment.
+	</div>
     <div class="payment-method-content">
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -30,8 +32,8 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
-                        attr: {title: $t('Place Order')}
+                        click: continueToOxipay,
+                        attr: {title: $t('Pay With Oxipay')}
                         ">
                     <span data-bind="i18n: 'Place Order'"></span>
                 </button>

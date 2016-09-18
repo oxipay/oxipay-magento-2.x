@@ -6,9 +6,19 @@
 /*global define*/
 define(
     [
-        'Magento_Checkout/js/view/payment/default'
+        'Magento_Checkout/js/view/payment/default',
+        'Magento_Paypal/js/action/set-payment-method',
+        'Magento_Checkout/js/model/payment/additional-validators',
+        'Magento_Checkout/js/model/quote',
+        'Magento_Customer/js/customer-data'
     ],
-    function (Component) {
+    function (
+            $,
+            Component,
+            setPaymentMethodAction,
+            quote,
+            customerData
+    ) {
         'use strict';
 
         return Component.extend({
@@ -44,8 +54,24 @@ define(
                     return {
                         'value': key,
                         'transaction_result': value
-                    }
+                    };
                 });
+            },
+
+            /** Redirect to paypal */
+            continueToOxipay: function () {
+                //update payment method information if additional data was changed
+                this.selectPaymentMethod();
+                setPaymentMethodAction(this.messageContainer).done(
+                    function () {
+                        customerData.invalidate(['cart']);
+                        $.mage.redirect(
+                            window.checkoutConfig.payment.paypalExpress.redirectUrl[quote.paymentMethod().method]
+                        );
+                    }
+                );
+
+                return false;
             }
         });
     }

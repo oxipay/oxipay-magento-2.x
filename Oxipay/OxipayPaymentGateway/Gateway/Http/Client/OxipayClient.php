@@ -53,7 +53,7 @@ class OxipayClient implements ClientInterface
         $headers = $transferObject->getHeaders();
 		$url = $bodyarray['gateway_url']; 
 		unset($bodyarray['gateway_url']);
-	    $body = json_encode($bodyarray);
+        $body = json_encode($bodyarray);
         $method = $transferObject->getMethod();
         
         $client = $this->clientFactory->create();
@@ -69,10 +69,10 @@ class OxipayClient implements ClientInterface
         $this->logger->debug(
             [
                 'request' => $transferObject->getBody(),
-                'response' => gzdecode($response)
+                'response' => $response->getBody()
             ]
         );
 
-        return $response;
+        return json_decode($response->getBody(), true);
     }
 }
