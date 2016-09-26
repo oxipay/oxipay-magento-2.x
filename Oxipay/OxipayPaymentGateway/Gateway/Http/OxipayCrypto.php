@@ -26,16 +26,21 @@ class OxipayCrypto
 		{
 			unset($authRequest['x_signature']);
 		}
-			
-		/* Prepare array (sort by key, json export) */
-		ksort($authRequest);
-		$json = json_encode($authRequest);
-		
-		/* sign */
-		$signature = hash_hmac("sha256", $json, $apikey);
-		
+                
+        	//order by key_name ascending
+        	$clear_text = '';
+        	ksort($authRequest);
+        	foreach ($authRequest as $key => $value) {
+	        	//step 2: concat all keys in form "{key}{value}"
+        		$clear_text .= $key . $value;
+        	}
+
+                //crypt
+                $secret = $apikey . '&';
+                $hash = base64_encode( hash_hmac( "sha256", $clear_text, $secret, true ));
+		$hash = str_replace('+', '', $hash);
 		/* Append signature onto the end of our array */
-		$authRequest["x_signature"] = $signature;
+		$authRequest["x_signature"] = $hash;
 		
 		return $authRequest;
 	}

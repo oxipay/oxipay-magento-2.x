@@ -15,6 +15,7 @@
                 <merchant_number backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
 				<api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
 				<gateway_url>http://172.16.0.1/Oxipay?platform=Magento</gateway_url>
+				<gateway_redirect_url>http://172.16.0.1/Oxipay?platform=Magento</gateway_redirect_url>
 				<test_mode>0</test_mode>
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize</payment_action>

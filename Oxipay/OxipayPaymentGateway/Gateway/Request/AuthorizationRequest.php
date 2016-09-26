@@ -8,7 +8,6 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Magento\Store\Model\StoreManagerInterface;
 use Oxipay\OxipayPaymentGateway\Gateway\Http\OxipayCrypto;
 
 class AuthorizationRequest implements BuilderInterface
@@ -42,15 +41,14 @@ class AuthorizationRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        if (!isset($buildSubject['payment'])
-            || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
-        ) {
+        if (isset($buildSubject['payment']) && $buildSubject['payment'] instanceof PaymentDataObjectInterface) {
+            $payment = $buildSubject['payment'];
+            $order = $payment->getOrder();
+        } else {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
         /** @var PaymentDataObjectInterface $payment */
-        $payment = $buildSubject['payment'];
-        $order = $payment->getOrder();
         $shippingaddress = $order->getShippingAddress();
 		$billingaddress = $order->getBillingAddress();
 		
@@ -58,54 +56,15 @@ class AuthorizationRequest implements BuilderInterface
 		$manager = $om->get('Magento\Store\Model\StoreManagerInterface');
 		$store = $manager->getStore($order->getStoreId());
 
-		/*
-		 * Required fields
-		 * First Name
-		 * Last Name
-		 * Email
-		 * Mobile
-		 * Shipping Address
-		 * Shipping Suburb
-		 * Shipping State
-		 * Shipping Postcode
-		 * Billing Address
-		 * Billing Suburb
-		 * Billing State
-		 * Billing Postcode
-		 * Total value
-		 */
-		
-        $array = [
-/* 		
-			'merchant_number' => $this->config->getValue(
-                'merchant_number',
-                $order->getStoreId()),
-			'first_name' => $billingaddress->getFirstname(),
-			'last_name' => $billingaddress->getLastname(),
-			'email' => $billingaddress->getEmail(),
-			'phone' => $billingaddress->getTelephone(),
-			'shipping_address1' => $shippingaddress->getStreetLine1(),
-			'shipping_address2' => $shippingaddress->getStreetLine2(),
-			'shipping_city' => $shippingaddress->getCity(),
-			'shipping_state' => $shippingaddress->getRegionCode(),
-			'shipping_postcode' => $shippingaddress->getPostcode(),
-			'billing_address1' => $billingaddress->getStreetLine1(),
-			'billing_address1' => $billingaddress->getStreetLine2(),
-			'billing_city' => $billingaddress->getCity(),
-			'billing_state' => $billingaddress->getRegionCode(),
-			'billing_postcode' => $billingaddress->getPostcode(),
-			'amount' => $order->getGrandTotalAmount(),
-			'currency' => $order->getCurrencyCode(),
-			'invoice_number' => $order->getOrderIncrementId() */
-			
+                $array = [
+
 			'x_currency' => $order->getCurrencyCode(),
 			'x_url_complete' => "",
 			'x_url_callback' => "",
 			'x_url_cancel' => "",
 			'x_shop_name' => $store->getName(),
 			'x_account_id' => $this->config->getValue(
-                'merchant_number',
-                $order->getStoreId()),
+			'merchant_number', $order->getStoreId()),
 			'x_reference' => $order->getOrderIncrementId(),
 			'x_invoice' => $order->getOrderIncrementId(),
 			'x_amount' => $order->getGrandTotalAmount(),
@@ -131,9 +90,15 @@ class AuthorizationRequest implements BuilderInterface
                 $order->getStoreId());
         $signedarray = $this->crypto->sign($array, $merchantkey);
 		
-		$signedarray['gateway_url'] = $this->config->getValue(
-                'gateway_url',
-                $order->getStoreId());
+        if (isset($buildSubject['payment'])){
+            $signedarray['gateway_url'] = $this->config->getValue(
+            'gateway_url',
+            $order->getStoreId());
+        } else {
+            $signedarray['gateway_url'] = $this->config->getValue(
+            'gateway_redirect_url',
+            $order->getStoreId());
+        }
                 
         return $signedarray;
     }

@@ -28,13 +28,13 @@ final class ConfigProvider implements ConfigProviderInterface
                     'transactionResults' => [
                         OxipayClient::SUCCESS => __('Success'),
                         OxipayClient::FAILURE => __('Failure')
-                    ]
+                    ],
+					'oxipayReturnUrl' => 'oxipay/payment/response', /* (Controller Payment/Response) */
+					'oxipayAction' => 'http://google.com' /* (TEST ONLY) */
                 ]
             ]
         ];
-        
-        $config['payment'][self::CODE]['redirectUrl'] = $this->_urlBuilder->getUrl('Oxipay/OxipayPaymentGateway/start');
-        
+		
         return $config;
     }
 }

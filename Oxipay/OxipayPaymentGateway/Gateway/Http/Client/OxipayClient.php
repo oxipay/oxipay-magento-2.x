@@ -66,13 +66,15 @@ class OxipayClient implements ClientInterface
 
         $response = $client->request($method);
 
+        $responsebody = $response->getBody();
+        
         $this->logger->debug(
             [
                 'request' => $transferObject->getBody(),
-                'response' => $response->getBody()
+                'response' => $responsebody
             ]
         );
 
-        return json_decode($response->getBody(), true);
+        return ['TransactionId' => $responsebody];
     }
 }

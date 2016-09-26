@@ -6,19 +6,11 @@
 /*global define*/
 define(
     [
+        'jquery',
         'Magento_Checkout/js/view/payment/default',
-        'Magento_Paypal/js/action/set-payment-method',
-        'Magento_Checkout/js/model/payment/additional-validators',
-        'Magento_Checkout/js/model/quote',
-        'Magento_Customer/js/customer-data'
+		'mage/url'
     ],
-    function (
-            $,
-            Component,
-            setPaymentMethodAction,
-            quote,
-            customerData
-    ) {
+    function ($, Component, url) {
         'use strict';
 
         return Component.extend({
@@ -26,6 +18,8 @@ define(
                 template: 'Oxipay_OxipayPaymentGateway/payment/form',
                 transactionResult: ''
             },
+
+            redirectAfterPlaceOrder: false,
 
             initObservable: function () {
 
@@ -58,20 +52,22 @@ define(
                 });
             },
 
-            /** Redirect to paypal */
             continueToOxipay: function () {
-                //update payment method information if additional data was changed
-                this.selectPaymentMethod();
-                setPaymentMethodAction(this.messageContainer).done(
-                    function () {
-                        customerData.invalidate(['cart']);
-                        $.mage.redirect(
-                            window.checkOutConfig.payment.oxipay_gateway.redirectUrl[quote.paymentMethod().method]
-                        );
-                    }
-                );
+                this.placeOrder();
 
                 return false;
+            },
+			
+            afterPlaceOrder: function() {
+				
+				$.ajax({
+					showLoader: true,
+					url: url.build('oxipay/Outbound/Redirect'),
+					data: {orderid: '000000098'},
+					type: "GET"
+				}).done(function (data) {
+					window.location.replace(data);
+				});
             }
         });
     }
