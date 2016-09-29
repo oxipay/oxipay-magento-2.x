@@ -8,7 +8,6 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Http;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Oxipay\OxipayPaymentGateway\Gateway\Http\OxipayCrypto;
 
 class TransferFactory implements TransferFactoryInterface
 {
@@ -19,7 +18,6 @@ class TransferFactory implements TransferFactoryInterface
 
     /**
      * @param TransferBuilder $transferBuilder
-	 * @param OxipayCrypto crypto
      */
     public function __construct(
         TransferBuilder $transferBuilder
@@ -38,7 +36,7 @@ class TransferFactory implements TransferFactoryInterface
         return $this->transferBuilder
             ->setBody($request)
             ->setMethod('POST')
-			->setHeaders(['Content-Type: application/json'])
+			->setHeaders(['Content-Type: application/x-www-form-urlencoded'])
             ->build();
     }
 }

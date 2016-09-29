@@ -44,8 +44,10 @@ class AuthorizationRequest implements BuilderInterface
         if (isset($buildSubject['payment']) && $buildSubject['payment'] instanceof PaymentDataObjectInterface) {
             $payment = $buildSubject['payment'];
             $order = $payment->getOrder();
+        } else if (isset($buildSubject['order']) && $buildSubject['order'] instanceof \Magento\Sales\Api\Data\OrderInterface) {
+            $order = $buildSubject['order'];
         } else {
-            throw new \InvalidArgumentException('Payment data object should be provided');
+            throw new \InvalidArgumentException('Payment data object or Order object should be provided');
         }
 
         /** @var PaymentDataObjectInterface $payment */

@@ -53,14 +53,13 @@ class OxipayClient implements ClientInterface
         $headers = $transferObject->getHeaders();
 		$url = $bodyarray['gateway_url']; 
 		unset($bodyarray['gateway_url']);
-        $body = json_encode($bodyarray);
         $method = $transferObject->getMethod();
         
         $client = $this->clientFactory->create();
         $client->setUri($url);
         $client->setMethod($method);
         $client->setHeaders($headers);
-        $client->setRawData($body);
+        $client->setParameterPost($bodyarray);
 		
         /* Body contains the JSON request string */
 

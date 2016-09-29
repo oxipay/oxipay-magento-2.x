@@ -105,10 +105,11 @@
 	<type name="Oxipay\OxipayPaymentGateway\Controller\Outbound\Redirect">
 		<arguments>
 			<argument name="context" xsi:type="object">Magento\Framework\App\Action\Context</argument>
-			<argument name="rawresult" xsi:type="object">Magento\Framework\Controller\Result\Raw</argument>
+			<argument name="jsonresultfactory" xsi:type="object">Magento\Framework\Controller\Result\JsonFactory</argument>
 			<argument name="authorizationrequest" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Request\AuthorizationRequest</argument>
 			<argument name="orderfactory" xsi:type="object">Magento\Sales\Model\OrderFactory</argument>
 			<argument name="config" xsi:type="object">OxipayPaymentGatewayConfig</argument>
+			<argument name="session" xsi:type="object">Magento\Checkout\Model\Session</argument>
 		</arguments>
 	</type>
 

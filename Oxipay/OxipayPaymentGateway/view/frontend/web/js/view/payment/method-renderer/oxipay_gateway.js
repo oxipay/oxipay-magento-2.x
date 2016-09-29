@@ -8,7 +8,7 @@ define(
     [
         'jquery',
         'Magento_Checkout/js/view/payment/default',
-		'mage/url'
+        'mage/url'
     ],
     function ($, Component, url) {
         'use strict';
@@ -18,8 +18,6 @@ define(
                 template: 'Oxipay_OxipayPaymentGateway/payment/form',
                 transactionResult: ''
             },
-
-            redirectAfterPlaceOrder: false,
 
             initObservable: function () {
 
@@ -59,15 +57,19 @@ define(
             },
 			
             afterPlaceOrder: function() {
-				
-				$.ajax({
-					showLoader: true,
-					url: url.build('oxipay/Outbound/Redirect'),
-					data: {orderid: '000000098'},
-					type: "GET"
-				}).done(function (data) {
-					window.location.replace(data);
-				});
+
+                var geturl = url.build('oxipay/Outbound/Redirect')
+                $.ajax({
+                        url: geturl,
+                        method: "GET",
+                }).done(function (data) {
+                        var payload = data;
+                        document.getElementById('oxipayredirectform').action = payload['url'];
+                        $.each(payload['payload'], function(itemkey, itemvalue) {
+                            document.getElementById(itemkey).value = itemvalue;
+                        });
+                        document.getElementById('oxipayredirectform').submit();
+                });
             }
         });
     }
