@@ -1,0 +1,2 @@
+# oxipay-magento-2.x [![Gitter](https://badges.gitter.im/oxipay/oxipay-magento-2.x-a.svg)](https://gitter.im/oxipay/oxipay-magento-2.x-a?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+Magento 2.x integration plugin for using the Oxipay payment gateway
