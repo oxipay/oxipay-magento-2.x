@@ -31,7 +31,6 @@ define(
             getCode: function() {
                 return 'oxipay_gateway';
             },
-
             getData: function() {
                 return {
                     'method': this.item.method,
@@ -51,11 +50,23 @@ define(
             },
 
             continueToOxipay: function () {
-                this.placeOrder();
+                $('#oxipayredirectform').submit();
+                //this.placeOrder();
 
                 return false;
             },
-			
+			getFromOxipay: function() {
+                return window.checkoutConfig.payment.oxipay_gateway.form_oxipay;
+            },
+            getErrors: function()
+            {
+                if(window.checkoutConfig.payment.oxipay_gateway.errors)
+                    $('#payment-method-content .error-msg').show();
+                else
+                    $('#payment-method-content .error-msg').hide();
+                return window.checkoutConfig.payment.oxipay_gateway.errors;
+                            
+            },                       
             afterPlaceOrder: function() {
 
                 var geturl = url.build('oxipay/Outbound/Redirect')

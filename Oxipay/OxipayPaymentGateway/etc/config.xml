@@ -8,28 +8,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <oxipay_gateway>
-                <debug>1</debug>
+            <oxipay_gateway>                
                 <active>1</active>
-                <model>OxipayPaymentGatewayFacade</model>
-                <merchant_number backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
-				<api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
-				<gateway_url>http://localhost:60343/Oxipay/Checkout/Process?platform=Magento</gateway_url>
-				<gateway_redirect_url>http://localhost:60343/Oxipay/Checkout?platform=Magento</gateway_redirect_url>
-				<test_mode>0</test_mode>
-                <order_status>pending_payment</order_status>
-                <payment_action>authorize</payment_action>
+                <model>Oxipay\OxipayPaymentGateway\Model\Oxipay</model>                
+                <order_status>complete</order_status>               
                 <title>Oxipay Payment Gateway</title>
-                <currency>AUD</currency>
-                <can_authorize>1</can_authorize>
-                <can_capture>0</can_capture>
-                <can_void>0</can_void>
-                <can_use_checkout>1</can_use_checkout>
-                <is_gateway>1</is_gateway>
-                <sort_order>1</sort_order>
-                <debugReplaceKeys>MERCHANT_KEY</debugReplaceKeys>
-                <paymentInfoKeys>FRAUD_MSG_LIST</paymentInfoKeys>
-                <privateInfoKeys>FRAUD_MSG_LIST</privateInfoKeys>
+                <test_mode>1</test_mode>
+                <gateway_redirect_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=Magento</gateway_redirect_url>
+                <gateway_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=Magento</gateway_url>
+                <group>oxipay</group>                
             </oxipay_gateway>
         </payment>
     </default>

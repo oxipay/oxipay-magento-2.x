@@ -1,0 +1,7 @@
+<?php
+    $paymentreturn = $block->paymentReturn();
+?>
+<p><?php echo __('Your order on') ?> <strong><?php echo $paymentreturn['shop_name']; ?></strong> <?php echo __('is complete') ?> </p>
+<p>
+	<?php echo __('If you have questions, comments or concerns, please contact our'); ?> <a href="<?php echo $paymentreturn['url_contact']; ?>"> <?php echo __('expert customer support team'); ?></a>.
+</p>

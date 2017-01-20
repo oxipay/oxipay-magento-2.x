@@ -20,8 +20,28 @@ final class ConfigProvider implements ConfigProviderInterface
      *
      * @return array
      */
+    protected $_scopeConfigInterface;
+    protected $customerSession;
+    protected $_urlBuilder;
+    protected $request;
+    public function __construct(
+    \Magento\Framework\App\Config\ScopeConfigInterface $configInterface,
+    \Magento\Customer\Model\Session $customerSession,
+    \Magento\Backend\Model\Session\Quote $sessionQuote,
+    \Magento\Framework\App\Action\Action $action, 
+    \Magento\Framework\App\Helper\Context $context
+    )
+    {
+        $this->_scopeConfigInterface = $configInterface;
+        $this->customerSession = $customerSession;
+        $this->sessionQuote = $sessionQuote;
+        $this->_urlBuilder = $context->getUrlBuilder();     
+        $this->action = $action;
+    }
     public function getConfig()
     {
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        $store = $om->get('Magento\Store\Model\StoreManagerInterface');
         $config = [
             'payment' => [
                 self::CODE => [
@@ -29,12 +49,10 @@ final class ConfigProvider implements ConfigProviderInterface
                         OxipayClient::SUCCESS => __('Success'),
                         OxipayClient::FAILURE => __('Failure')
                     ],
-					'oxipayReturnUrl' => 'oxipay/payment/response', /* (Controller Payment/Response) */
-					'oxipayAction' => 'http://google.com' /* (TEST ONLY) */
+                    'errors' => $this->action->getRequest()->getParams('error_oxipay')?'The Payment provider rejected the transaction. Please try again.':'',
                 ]
             ]
         ];
-		
         return $config;
     }
 }

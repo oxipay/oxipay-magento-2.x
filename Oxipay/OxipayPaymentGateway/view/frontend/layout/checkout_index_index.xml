@@ -7,6 +7,7 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        
         <referenceBlock name="checkout.root">
             <arguments>
                 <argument name="jsLayout" xsi:type="array">
@@ -45,5 +46,8 @@
                 </argument>
             </arguments>
         </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Oxipay\OxipayPaymentGateway\Block\Formoxipay" name="oxipay_formoxipay" template="Oxipay_OxipayPaymentGateway::formoxipay.phtml" method="append" />
+        </referenceContainer>
     </body>
 </page>
