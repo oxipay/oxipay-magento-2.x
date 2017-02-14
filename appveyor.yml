@@ -1,0 +1,32 @@
+branches:
+  only:
+    - master
+skip_tags: true
+environment:
+  release_name: "oxipay-magento-2.x-v%appveyor_build_version%.zip"
+build_script:
+  - ps: Invoke-Expression "7z a $env:release_name"
+artifacts:
+  - path: $(release_name)
+    name: $(appveyor_build_version)
+    type: zip
+deploy:
+  release: v$(appveyor_build_version)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
+  provider: GitHub
+  auth_token:
+    secure: 0+N+1uQIuKJr2Q4IgGOf8SlaCTcV5jSKdRY8Rg2Js1l0S28lMDz49gW4jpjsi0Uj
+  artifact: /.*\.zip/
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: false
+notifications:
+  - provider: Email
+    to:
+      - devadmin@oxipay.com.au
+  - provider: Slack
+    auth_token:
+      secure: yXpzER0fyDmh7wYR6zrrES+wGzz5010OpUvpb5UPMsQZO12Ag3TaeOjSsZ0tDQQ4WaNoNngsPOPiaYWmsfg3fhJrSyPy240FqSwDdhSPqC0=
+    channel: '#alerts'
