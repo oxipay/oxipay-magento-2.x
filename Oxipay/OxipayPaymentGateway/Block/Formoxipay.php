@@ -9,12 +9,14 @@ class Formoxipay extends \Magento\Framework\View\Element\Template
     protected $_urlBuilder;
 	public function __construct(
     \Magento\Framework\App\Config\ScopeConfigInterface $configInterface,
+    \Magento\Directory\Api\CountryInformationAcquirerInterface $countryInformation,
     \Magento\Customer\Model\Session $customerSession,
     \Magento\Backend\Model\Session\Quote $sessionQuote,
     \Magento\Framework\View\Element\Template\Context $context)
 	{
 		parent::__construct($context);
         $this->_scopeConfigInterface = $configInterface;
+        $this->countryInformation = $countryInformation;
         $this->customerSession = $customerSession;
         $this->sessionQuote = $sessionQuote;
         $this->_urlBuilder = $context->getUrlBuilder(); 
@@ -33,6 +35,9 @@ class Formoxipay extends \Magento\Framework\View\Element\Template
         $firstname=$customerSession->getCustomer()->getFirstname();
         $lastname= $customerSession->getCustomer()->getLastname();
         $email = $customerSession->getCustomer()->getEmail();
+        $countryid = $this->_scopeConfigInterface->getValue('general/country/default');
+//        $country = $this->countryInformation->getCountryInfo($countryid);
+//        $countryname = $country->getFullNameLocale();
         $query =Array
         (
             'x_reference' => $cart->getQuote()->getId(),
@@ -43,7 +48,7 @@ class Formoxipay extends \Magento\Framework\View\Element\Template
             'x_url_complete' => $this->_urlBuilder->getUrl("oxipay/checkout/success",['quoteId' => $cart->getQuote()->getId()]),
             'x_url_cancel' => $this->_urlBuilder->getUrl("checkout"),
             'x_test' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/test_mode')?true:false,
-            'x_shop_country' => 'AU',
+            'x_shop_country' => $countryid,
             'x_shop_name' =>$store->getStore()->getName(), 
             'x_customer_first_name' => $firstname,
             'x_customer_last_name' => $lastname,

@@ -13,9 +13,10 @@
                 <model>Oxipay\OxipayPaymentGateway\Model\Oxipay</model>                
                 <order_status>complete</order_status>               
                 <title>Oxipay Payment Gateway</title>
+                <description>You will be redirected to Oxipay to complete your payment.</description>
                 <test_mode>1</test_mode>
-                <gateway_redirect_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=default</gateway_redirect_url>
-                <gateway_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=default</gateway_url>
+                <gateway_redirect_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=Magento</gateway_redirect_url>
+                <gateway_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=Magento</gateway_url>
                 <group>oxipay</group>                
             </oxipay_gateway>
         </payment>
