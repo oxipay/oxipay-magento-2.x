@@ -88,10 +88,7 @@ class Formoxipay extends \Magento\Framework\View\Element\Template
     }
     public function getUrlGateway()
     {
-        if(!(int)$this->_scopeConfigInterface->getValue('payment/oxipay_gateway/test_mode'))
-            return $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_url');
-        else
-            return $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_redirect_url');
+        return $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_url');
     }
     public function oxipay_sign($query, $api_key )
     {
