@@ -12,7 +12,8 @@
                 <active>1</active>
                 <model>Oxipay\OxipayPaymentGateway\Model\Oxipay</model>                
                 <order_status>complete</order_status>               
-                <title>Oxipay Payment Gateway</title>
+                <title>Oxipay</title>
+                <description>Pay the easier way</description>
                 <test_mode>0</test_mode>
                 <gateway_url>https://secure.oxipay.com.au/Checkout?platform=default</gateway_url>
                 <group>oxipay</group>                
