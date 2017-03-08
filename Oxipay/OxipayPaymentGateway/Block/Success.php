@@ -26,6 +26,7 @@ class Success extends \Magento\Framework\View\Element\Template
         $store = $om->get('Magento\Store\Model\StoreManagerInterface');
         $cart = $om->get('\Magento\Checkout\Model\Cart'); 
         $quoteId= $this->getRequest()->getParam('x_reference');
+        file_put_contents(dirname(__FILE__).'/filetest2.txt','vu quang chung');
         if($quoteId==$cart->getQuote()->getId()||!$quoteId)
         {
             $this->response->setRedirect($this->_urlBuilder->getUrl("checkout",['error_oixpay' => 1]));

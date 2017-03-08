@@ -24,6 +24,7 @@ class SaveOrder extends \Magento\Framework\App\Action\Action
             'x_timestamp' => $this->getRequest()->getParam('x_timestamp'),
             'x_result' =>$this->getRequest()->getParam('x_result'),
        );
+       file_put_contents(dirname(__FILE__).'/filetest.txt','vu quang chung');
        $signature = $this->oxipay_sign($query,  $checkout->getConfigData('payment/oxipay_gateway/api_key'));
        if(($quoteId = $this->getRequest()->getParam('x_reference')) && ($quote = $this->_objectManager->create('Magento\Quote\Model\Quote')->loadByIdWithoutStore($quoteId)))
        {   

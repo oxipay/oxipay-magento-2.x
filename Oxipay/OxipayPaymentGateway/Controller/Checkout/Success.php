@@ -12,7 +12,7 @@ class Success extends \Magento\Framework\App\Action\Action
 		return parent::__construct($context);
 	}
 	public function execute()
-	{	   
+	{	 
 		return $this->_pageFactory->create();
 	}
 }

@@ -58,6 +58,12 @@ define(
 			getFromOxipay: function() {
                 return window.checkoutConfig.payment.oxipay_gateway.form_oxipay;
             },
+            getDescription: function() {
+                return window.checkoutConfig.payment.oxipay_gateway.description;
+            },
+            getOxipayLogo:function(){
+                return window.checkoutConfig.payment.oxipay_gateway.logo;
+            },
             getErrors: function()
             {
                 if(window.checkoutConfig.payment.oxipay_gateway.errors)

@@ -50,6 +50,8 @@ final class ConfigProvider implements ConfigProviderInterface
                         OxipayClient::FAILURE => __('Failure')
                     ],
                     'errors' => $this->action->getRequest()->getParams('error_oxipay')?'The Payment provider rejected the transaction. Please try again.':'',
+                    'description' =>$this->_scopeConfigInterface->getValue('payment/oxipay_gateway/description'),
+                    'logo' =>'../pub/media/sales/store/logo/'.$this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_logo'),
                 ]
             ]
         ];
