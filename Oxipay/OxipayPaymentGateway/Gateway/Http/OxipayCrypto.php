@@ -35,10 +35,9 @@ class OxipayCrypto
         		$clear_text .= $key . $value;
         	}
 
-                //crypt
-                $secret = $apikey . '&';
-                $hash = base64_encode( hash_hmac( "sha256", $clear_text, $secret, true ));
-		$hash = str_replace('+', '', $hash);
+		//crypt
+		$hash = hash_hmac( "sha256", $clear_text, $apikey );
+		$hash = str_replace('-', '', $hash);
 		/* Append signature onto the end of our array */
 		$authRequest["x_signature"] = $hash;
 		
