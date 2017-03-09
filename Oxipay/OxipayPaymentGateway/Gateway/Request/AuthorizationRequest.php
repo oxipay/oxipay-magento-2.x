@@ -92,15 +92,9 @@ class AuthorizationRequest implements BuilderInterface
                 $order->getStoreId());
         $signedarray = $this->crypto->sign($array, $merchantkey);
 		
-        if (isset($buildSubject['payment'])){
-            $signedarray['gateway_url'] = $this->config->getValue(
-            'gateway_url',
-            $order->getStoreId());
-        } else {
-            $signedarray['gateway_url'] = $this->config->getValue(
-            'gateway_redirect_url',
-            $order->getStoreId());
-        }
+        $signedarray['gateway_url'] = $this->config->getValue(
+        'gateway_url',
+        $order->getStoreId());
                 
         return $signedarray;
     }
