@@ -85,7 +85,7 @@ class Checkout
     }
     public function getConfigData($key)
     {
-        return $this->_scopeConfigInterface->getValue($key);
+        return $this->_scopeConfigInterface->getValue($key, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }
 ?>

@@ -52,14 +52,16 @@ final class ConfigProvider implements ConfigProviderInterface
                         OxipayClient::FAILURE => __('Failure')
                     ],
                     'errors' => $this->action->getRequest()->getParams('error_oxipay')?'The Payment provider rejected the transaction. Please try again.':'',
-                    'description' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/description'),
+                    'title' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/title', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
+                    'description' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/description', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
+                    'gateway_url' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_url', \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE),
                 ]
             ]
         ];
 
-        $logoFile = $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_logo');
+        $logoFile = $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_logo', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         if(strlen($logoFile) > 0){
-            $logo = '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_logo');
+            $logo = '../pub/media/sales/store/logo/' . $logoFile;
         }
         else{
             $params = ['_secure' => $this->action->getRequest()->isSecure()];
