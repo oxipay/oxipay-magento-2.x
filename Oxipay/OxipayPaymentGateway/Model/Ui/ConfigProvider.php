@@ -55,6 +55,7 @@ final class ConfigProvider implements ConfigProviderInterface
                     'title' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/title', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
                     'description' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/description', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
                     'gateway_url' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_url', \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE),
+                    'allowed_countries' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/specificcountry', \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE),
                 ]
             ]
         ];
