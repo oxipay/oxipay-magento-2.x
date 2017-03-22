@@ -12,10 +12,10 @@
                 <active>1</active>
                 <model>Oxipay\OxipayPaymentGateway\Model\Oxipay</model>                
                 <order_status>complete</order_status>               
-                <title>Oxipay Payment Gateway</title>
-                <test_mode>1</test_mode>
-                <gateway_redirect_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=default</gateway_redirect_url>
-                <gateway_url>https://xpozsecure.certegyezipay.com.au/Checkout?platform=default</gateway_url>
+                <title>Oxipay</title>
+                <description>Pay the easier way</description>
+                <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <gateway_url>https://secure.oxipay.com.au/Checkout?platform=default</gateway_url>
                 <group>oxipay</group>                
             </oxipay_gateway>
         </payment>

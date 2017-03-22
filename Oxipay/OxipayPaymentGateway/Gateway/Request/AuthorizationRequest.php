@@ -84,7 +84,7 @@ class AuthorizationRequest implements BuilderInterface
 			'x_customer_shipping_city' => $shippingaddress->getCity(),
 			'x_customer_shipping_state' => $shippingaddress->getRegionCode(),
 			'x_customer_shipping_zip' => $shippingaddress->getPostcode(),
-			'x_test' => $this->config->getValue('test_mode', $order->getStoreId())
+			'x_test' => 'false'
         ];
         
         $merchantkey = $this->config->getValue(
@@ -92,15 +92,9 @@ class AuthorizationRequest implements BuilderInterface
                 $order->getStoreId());
         $signedarray = $this->crypto->sign($array, $merchantkey);
 		
-        if (isset($buildSubject['payment'])){
-            $signedarray['gateway_url'] = $this->config->getValue(
-            'gateway_url',
-            $order->getStoreId());
-        } else {
-            $signedarray['gateway_url'] = $this->config->getValue(
-            'gateway_redirect_url',
-            $order->getStoreId());
-        }
+        $signedarray['gateway_url'] = $this->config->getValue(
+        'gateway_url',
+        $order->getStoreId());
                 
         return $signedarray;
     }
