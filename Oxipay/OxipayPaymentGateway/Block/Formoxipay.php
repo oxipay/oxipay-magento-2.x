@@ -42,7 +42,7 @@ class Formoxipay extends \Magento\Framework\View\Element\Template
             'x_url_callback' =>$this->_urlBuilder->getUrl("oxipay/checkout/saveorder",['quoteId' => $cart->getQuote()->getId()]),
             'x_url_complete' => $this->_urlBuilder->getUrl("oxipay/checkout/success",['quoteId' => $cart->getQuote()->getId()]),
             'x_url_cancel' => $this->_urlBuilder->getUrl("checkout"),
-            'x_test' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/test_mode') ? 'true' : 'false',
+            'x_test' => 'false',
             'x_shop_country' => 'AU',
             'x_shop_name' =>$store->getStore()->getName(), 
             'x_customer_first_name' => $firstname,
