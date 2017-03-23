@@ -84,7 +84,7 @@ class AuthorizationRequest implements BuilderInterface
 			'x_customer_shipping_city' => $shippingaddress->getCity(),
 			'x_customer_shipping_state' => $shippingaddress->getRegionCode(),
 			'x_customer_shipping_zip' => $shippingaddress->getPostcode(),
-			'x_test' => $this->config->getValue('test_mode', $order->getStoreId()) ? 'true' : 'false'
+			'x_test' => 'false'
         ];
         
         $merchantkey = $this->config->getValue(
