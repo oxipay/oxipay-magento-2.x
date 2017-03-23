@@ -16,7 +16,6 @@
                 <description>Pay the easier way</description>
                 <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <gateway_url>https://secure.oxipay.com.au/Checkout?platform=default</gateway_url>
-                <allowspecific>1</allowspecific>
                 <specificcountry>AU,NZ</specificcountry>
                 <group>oxipay</group>                
             </oxipay_gateway>
