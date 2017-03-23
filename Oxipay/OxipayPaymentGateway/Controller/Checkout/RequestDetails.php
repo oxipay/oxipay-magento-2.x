@@ -51,7 +51,7 @@ class RequestDetails extends \Magento\Framework\App\Action\Action
             'x_url_callback' => $this->_urlBuilder->getUrl("oxipay/checkout/saveorder", ['quoteId' => $quote->getId()]),
             'x_url_complete' => $this->_urlBuilder->getUrl("oxipay/checkout/success", ['quoteId' => $quote->getId()]),
             'x_url_cancel' => $this->_urlBuilder->getUrl("checkout"),
-            'x_test' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/test_mode', \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE) ? 'true' : 'false',
+            'x_test' => 'false',
             'x_shop_country' => $storeCountry,
             'x_shop_name' => $this->_scopeConfigInterface->getValue('general/store_information/name', \Magento\Store\Model\ScopeInterface::SCOPE_STORE), 
             'x_customer_first_name' => $request->getParam('customer_first_name'),
