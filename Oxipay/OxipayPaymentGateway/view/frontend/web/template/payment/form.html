@@ -11,11 +11,12 @@
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
         <label class="label" data-bind="attr: {'for': getCode()}">
+            <img class="payment-icon" data-bind="attr: {src: getOxipayLogo(), alt: $t('Logo')}" style="height: 50px;"/>
             <span data-bind="text: getTitle()"></span>
         </label>
     </div>
-	<div class="payment-method-note">
-		You will be redirected to Oxipay to complete your payment.
+	<div class="payment-method-content">
+	    <div class="payment-method-note" data-bind="text: getDescription()"></div>
 	</div>
     <div class="payment-method-content" id="payment-method-content">
         <!-- ko foreach: getRegion('messages') -->
@@ -26,17 +27,50 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-        
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
         <div class="actions-toolbar">
             <div class="primary">
-                <button class="action primary checkout"
-                        type="submit"
-                        data-bind="
-                        click: continueToOxipay,
-                        attr: {title: $t('Pay With Oxipay')}
-                        ">
-                    <span data-bind="i18n: 'Place Order'"></span>
-                </button>
+                <form method="post" data-bind="attr: {action: getGatewayUrl()}">
+                    <input type="hidden" name="x_reference" data-bind="{value: data.reference}">
+                    <input type="hidden" name="x_account_id" data-bind="{value: data.account_id}">
+                    <input type="hidden" name="x_amount" data-bind="{value: data.amount}">
+                    <input type="hidden" name="x_currency" data-bind="{value: data.currency}">
+                    <input type="hidden" name="x_url_callback" data-bind="{value: data.url_callback}">
+                    <input type="hidden" name="x_url_complete" data-bind="{value: data.url_complete}">
+                    <input type="hidden" name="x_url_cancel" data-bind="{value: data.url_cancel}">
+                    <input type="hidden" name="x_test" data-bind="{value: data.test}">
+                    <input type="hidden" name="x_shop_country" data-bind="{value: data.shop_country}">
+                    <input type="hidden" name="x_shop_name" data-bind="{value: data.shop_name}">
+                    <input type="hidden" name="x_customer_first_name" data-bind="{value: data.customer_first_name}">
+                    <input type="hidden" name="x_customer_last_name" data-bind="{value: data.customer_last_name}">
+                    <input type="hidden" name="x_customer_email" data-bind="{value: data.customer_email}">
+                    <input type="hidden" name="x_customer_phone" data-bind="{value: data.customer_phone}">
+                    <input type="hidden" name="x_customer_billing_country" data-bind="{value: data.customer_billing_country}">
+                    <input type="hidden" name="x_customer_billing_city" data-bind="{value: data.customer_billing_city}">
+                    <input type="hidden" name="x_customer_billing_address1" data-bind="{value: data.customer_billing_address1}">
+                    <input type="hidden" name="x_customer_billing_address2" data-bind="{value: data.customer_billing_address2}">
+                    <input type="hidden" name="x_customer_billing_state" data-bind="{value: data.customer_billing_state}">
+                    <input type="hidden" name="x_customer_billing_zip" data-bind="{value: data.customer_billing_zip}">
+                    <input type="hidden" name="x_customer_shipping_country" data-bind="{value: data.customer_shipping_country}">
+                    <input type="hidden" name="x_customer_shipping_city" data-bind="{value: data.customer_shipping_city}">
+                    <input type="hidden" name="x_customer_shipping_address1" data-bind="{value: data.customer_shipping_address1}">
+                    <input type="hidden" name="x_customer_shipping_address2" data-bind="{value: data.customer_shipping_address2}">
+                    <input type="hidden" name="x_customer_shipping_state" data-bind="{value: data.customer_shipping_state}">
+                    <input type="hidden" name="x_customer_shipping_zip" data-bind="{value: data.customer_shipping_zip}">
+                    <input type="hidden" name="x_signature" data-bind="{value: data.signature}">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="
+                            attr: {title: $t('Pay With Oxipay')},
+                            enable: canSubmit
+                            ">
+                        <span data-bind="i18n: 'Place Order'"></span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>

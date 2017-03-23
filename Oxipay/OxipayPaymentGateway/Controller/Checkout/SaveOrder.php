@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Oxipay\OxipayPaymentGateway\Controller\Checkout;
 
 use Magento\Framework\DataObject;
@@ -18,7 +14,7 @@ class SaveOrder extends \Magento\Framework\App\Action\Action
             'x_account_id'=>$this->getRequest()->getParam('x_account_id'),
             'x_reference'=>$this->getRequest()->getParam('x_reference'),
             'x_currency' =>$this->getRequest()->getParam('x_currency'),
-            'x_test'=>$this->getRequest()->getParam('x_test'),
+            'x_test'=>'false',
             'x_amount' => $this->getRequest()->getParam('x_amount'),
             'x_gateway_reference'=>$this->getRequest()->getParam('x_gateway_reference'),
             'x_timestamp' => $this->getRequest()->getParam('x_timestamp'),
