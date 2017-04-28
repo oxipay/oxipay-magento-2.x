@@ -7,8 +7,10 @@ namespace Oxipay\OxipayPaymentGateway\Block;
 
 use Magento\Framework\Phrase;
 use Magento\Payment\Block\ConfigurableInfo;
-use Oxipay\OxipayPaymentGateway\Gateway\Response\FraudHandler;
 
+/**
+ * Class Info
+ */
 class Info extends ConfigurableInfo
 {
     /**
@@ -20,21 +22,5 @@ class Info extends ConfigurableInfo
     protected function getLabel($field)
     {
         return __($field);
-    }
-
-    /**
-     * Returns value view
-     *
-     * @param string $field
-     * @param string $value
-     * @return string | Phrase
-     */
-    protected function getValueView($field, $value)
-    {
-        switch ($field) {
-            case FraudHandler::FRAUD_MSG_LIST:
-                return implode('; ', $value);
-        }
-        return parent::getValueView($field, $value);
     }
 }
