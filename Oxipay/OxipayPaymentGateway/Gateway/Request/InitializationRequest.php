@@ -7,42 +7,27 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Request;
 
 use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
-use Magento\Payment\Gateway\ConfigInterface;
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Magento\Framework\Message\ManagerInterface;
 use Magento\Checkout\Model\Session;
+use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
-class InitializationRequest implements BuilderInterface {
-
-    const LOG_FILE = 'oxipay.log';
-    const OXIPAY_DEFAULT_CURRENCY_CODE = 'AUD';
-    const OXIPAY_DEFAULT_COUNTRY_CODE = 'AU';
-
-    /**
-     * @var ConfigInterface
-     */
-    private $_config;
-
-    private $_messageManager;
-
+class InitializationRequest implements BuilderInterface
+{
     private $_logger;
-
     private $_session;
+    private $_gatewayConfig;
 
     /**
      * @param ConfigInterface $config
      */
     public function __construct(
-        ConfigInterface $config,
-        ManagerInterface $messageManager,
+        Config $gatewayConfig,
         LoggerInterface $logger,
         Session $session
     ) {
-        $this->_config = $config;
+        $this->_gatewayConfig = $gatewayConfig;
         $this->_logger = $logger;
-        $this->_messageManager = $messageManager;
         $this->_session = $session;
     }
 
@@ -51,19 +36,24 @@ class InitializationRequest implements BuilderInterface {
      * @throws Mage_Api_Exception
      */
     private function validateQuote(OrderAdapter $order) {
-        $this->_logger->debug("[InitializationRequest][validateQuote]: ".($order->getGrandTotalAmount()).", ".($order->getBillingAddress()->getCountryId()).", ".($order->getCurrencyCode())."");
         if($order->getGrandTotalAmount() < 20) {
             $this->_session->setOxipayErrorMessage(__("Oxipay doesn't support purchases less than $20."));
             return false;
         }
 
-        if($order->getBillingAddress()->getCountryId() != self::OXIPAY_DEFAULT_COUNTRY_CODE || $order->getCurrencyCode() != self::OXIPAY_DEFAULT_CURRENCY_CODE) {
-            $this->_session->setOxipayErrorMessage(__("Oxipay doesn't support purchases from outside Australia."));
+        $this->_logger->debug('[InitializationRequest][validateQuote]$this->_gatewayConfig->getSpecificCountry():'.($this->_gatewayConfig->getSpecificCountry()));
+        $allowedCountriesArray = explode(',', $this->_gatewayConfig->getSpecificCountry());
+
+        $this->_logger->debug('[InitializationRequest][validateQuote]$order->getBillingAddress()->getCountryId():'.($order->getBillingAddress()->getCountryId()));
+        if (!in_array($order->getBillingAddress()->getCountryId(), $allowedCountriesArray)) {
+            $this->_logger->debug('[InitializationRequest][validateQuote]Country is not in array');
+            $this->_session->setOxipayErrorMessage(__('Orders from this country are not supported by Oxipay. Please select a different payment option.'));
             return false;
         }
 
-        if($order->getShippingAddress()->getCountryId() != self::OXIPAY_DEFAULT_COUNTRY_CODE) {
-            $this->_session->setOxipayErrorMessage(__("Oxipay doesn't support purchases shipped outside Australia."));
+        $this->_logger->debug('[InitializationRequest][validateQuote]$order->getShippingAddress()->getCountryId():'.($order->getShippingAddress()->getCountryId()));
+        if (!in_array($order->getShippingAddress()->getCountryId(), $allowedCountriesArray)) {
+            $this->_session->setOxipayErrorMessage(__('Orders shipped to this country are not supported by Oxipay. Please select a different payment option.'));
             return false;
         }
 
@@ -93,7 +83,6 @@ class InitializationRequest implements BuilderInterface {
             $stateObject->setStatus(Order::STATE_PENDING_PAYMENT);
             $stateObject->setIsNotified(false);
         } else {
-            $this->_logger->debug("[InitializationRequest][validateQuote]Canceling order.");
             $stateObject->setState(Order::STATE_CANCELED);
             $stateObject->setStatus(Order::STATE_CANCELED);
             $stateObject->setIsNotified(false);

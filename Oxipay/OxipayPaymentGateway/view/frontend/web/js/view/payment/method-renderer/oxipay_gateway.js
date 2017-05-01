@@ -10,7 +10,7 @@ define(
         'Magento_Checkout/js/view/payment/default',
         'Magento_Checkout/js/model/url-builder',
         'mage/url',
-         'Magento_Checkout/js/model/quote',
+        'Magento_Checkout/js/model/quote',
     ],
     function (
         $,
@@ -45,12 +45,12 @@ define(
             },
 
             afterPlaceOrder: function () {
-                console.log(JSON.stringify(quote.billingAddress()));
-                console.log(JSON.stringify(quote.shippingAddress()));
-                console.log(JSON.stringify(quote.totals()));
                 window.location.replace(url.build('oxipay/checkout/index'));
             },
 
+            /*
+             * This same validation is done server-side in InitializationRequest.validateQuote()
+             */
             validate: function() {
                 var billingAddress = quote.billingAddress();
                 var shippingAddress = quote.shippingAddress();
@@ -84,7 +84,7 @@ define(
                 }
 
                 if (allowedCountriesArray.indexOf(billingAddress.countryId) == -1 ||
-                    allowedCountriesArray.indexOf(billingAddress.countryId) == -1) {
+                    allowedCountriesArray.indexOf(shippingAddress.countryId) == -1) {
                     self.messageContainer.addErrorMessage({'message': 'Orders from this country are not supported by Oxipay. Please select a different payment option.'});
                     return false;
                 }

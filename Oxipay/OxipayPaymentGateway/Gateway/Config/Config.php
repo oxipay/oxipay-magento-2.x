@@ -6,9 +6,13 @@
 namespace Oxipay\OxipayPaymentGateway\Gateway\Config;
 
 /**
- * Class Config
+ * Class Config.
+ * Values returned from Magento\Payment\Gateway\Config\Config.getValue()
+ * are taken by default from ScopeInterface::SCOPE_STORE
  */
-class Config extends \Magento\Payment\Gateway\Config\Config {
+class Config extends \Magento\Payment\Gateway\Config\Config
+{
+    const CODE = 'oxipay_gateway';
 
     const KEY_ACTIVE = 'active';
     const KEY_TITLE = 'title';
@@ -30,6 +34,33 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
      */
     public function getMerchantNumber() {
         return $this->getValue(self::KEY_MERCHANT_NUMBER);
+    }
+
+    /**
+     * Get Merchant number
+     *
+     * @return string
+     */
+    public function getTitle() {
+        return $this->getValue(self::KEY_TITLE);
+    }
+
+    /**
+     * Get Logo
+     *
+     * @return string
+     */
+    public function getLogo() {
+        return $this->getValue(self::KEY_GATEWAY_LOGO);
+    }
+
+    /**
+     * Get Description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->getValue(self::KEY_DESCRIPTION);
     }
 
     /**
@@ -95,7 +126,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config {
      */
     public function getSpecificCountry()
     {
-        return $this->getValue(self::KEY_API_KEY);
+        return $this->getValue(self::KEY_SPECIFIC_COUNTRY);
     }
 
 }

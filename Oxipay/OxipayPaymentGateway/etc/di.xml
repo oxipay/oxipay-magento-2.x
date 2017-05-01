@@ -9,7 +9,7 @@
     <!-- Payment Method Facade configuration -->
     <virtualType name="OxipayPaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">Oxipay\OxipayPaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="code" xsi:type="const">Oxipay\OxipayPaymentGateway\Gateway\Config\Config::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="infoBlockType" xsi:type="string">Oxipay\OxipayPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">OxipayPaymentGatewayValueHandlerPool</argument>
@@ -20,21 +20,9 @@
     <!-- Configuration reader -->
     <type name="Oxipay\OxipayPaymentGateway\Gateway\Config\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">Oxipay\OxipayPaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="methodCode" xsi:type="const">Oxipay\OxipayPaymentGateway\Gateway\Config\Config::CODE</argument>
         </arguments>
     </type>
-    <!--<virtualType name="OxipayPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
-        <arguments>
-            <argument name="methodCode" xsi:type="const">Oxipay\OxipayPaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
-        </arguments>
-    </virtualType>-->
-
-    <!-- Logger, initialized with OxipayPaymentGatewayConfig -->
-    <!--<virtualType name="OxipayPaymentGatewayLogger" type="Magento\Payment\Model\Method\Logger">
-        <arguments>
-            <argument name="config" xsi:type="object">OxipayPaymentGatewayConfig</argument>
-        </arguments>
-    </virtualType>-->
 
     <!-- Commands infrastructure -->
     <virtualType name="OxipayPaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
@@ -65,7 +53,6 @@
     <type name="Oxipay\OxipayPaymentGateway\Gateway\Request\InitializationRequest">
         <arguments>
             <argument name="config" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Config\Config</argument>
-            <!--<argument name="logger" xsi:type="object">OxipayPaymentGatewayLogger</argument>-->
         </arguments>
     </type>
 

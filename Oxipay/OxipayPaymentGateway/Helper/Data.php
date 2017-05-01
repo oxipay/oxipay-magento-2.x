@@ -161,5 +161,4 @@ class Data extends AbstractHelper {
         return $this->getStoreManager()->getStore()->getCode();
     }
     
-
 }

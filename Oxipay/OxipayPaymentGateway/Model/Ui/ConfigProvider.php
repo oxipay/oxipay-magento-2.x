@@ -12,19 +12,14 @@ use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
+use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
 
 /**
  * Class ConfigProvider
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-    const CODE = 'oxipay_gateway';
-
-    /**
-     * Retrieve assoc array of checkout configuration
-     *
-     * @return array
-     */
+    protected $_gatewayConfig;
     protected $_scopeConfigInterface;
     protected $customerSession;
     protected $_urlBuilder;
@@ -32,6 +27,7 @@ final class ConfigProvider implements ConfigProviderInterface
     protected $_assetRepo;
 
     public function __construct(
+    Config $gatewayConfig,
     ScopeConfigInterface $configInterface,
     Session $customerSession,
     Quote $sessionQuote,
@@ -40,6 +36,7 @@ final class ConfigProvider implements ConfigProviderInterface
     Repository $assetRepo
     )
     {
+        $this->_gatewayConfig = $gatewayConfig;
         $this->_scopeConfigInterface = $configInterface;
         $this->customerSession = $customerSession;
         $this->sessionQuote = $sessionQuote;
@@ -50,7 +47,7 @@ final class ConfigProvider implements ConfigProviderInterface
 
     public function getConfig()
     {
-        $logoFile = $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/gateway_logo', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $logoFile = $this->_gatewayConfig->getLogo();
         if(strlen($logoFile) > 0){
             $logo = '../pub/media/sales/store/logo/' . $logoFile;
         }
@@ -62,11 +59,11 @@ final class ConfigProvider implements ConfigProviderInterface
         //TODO: use Config
         $config = [
             'payment' => [
-                self::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/title', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/description', \Magento\Store\Model\ScopeInterface::SCOPE_STORE),
+                Config::CODE => [
+                    'title' => $this->_gatewayConfig->getTitle(),
+                    'description' => $this->_gatewayConfig->getDescription(),
                     'logo' => $logo,
-                    'allowed_countries' => $this->_scopeConfigInterface->getValue('payment/oxipay_gateway/specificcountry', \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE)
+                    'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
                 ]
             ]
         ];
