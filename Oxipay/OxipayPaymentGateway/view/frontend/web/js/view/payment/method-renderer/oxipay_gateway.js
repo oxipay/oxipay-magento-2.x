@@ -8,80 +8,113 @@ define(
     [
         'jquery',
         'Magento_Checkout/js/view/payment/default',
-        'mage/url'
+        'Magento_Checkout/js/model/url-builder',
+        'mage/url',
+        'Magento_Checkout/js/model/quote',
     ],
-    function ($, Component, url) {
+    function (
+        $,
+        Component, 
+        urlBuilder,
+        url,
+        quote) {
         'use strict';
 
+        var self;
+
         return Component.extend({
+            redirectAfterPlaceOrder: false,
+
             defaults: {
-                template: 'Oxipay_OxipayPaymentGateway/payment/form',
-                transactionResult: ''
+                template: 'Oxipay_OxipayPaymentGateway/payment/form'
             },
 
-            initObservable: function () {
-
-                this._super()
-                    .observe([
-                        'transactionResult'
-                    ]);
-                return this;
+            initialize: function() {
+                this._super();
+                self = this;
             },
 
             getCode: function() {
                 return 'oxipay_gateway';
             },
+
             getData: function() {
                 return {
-                    'method': this.item.method,
-                    'additional_data': {
-                        'transaction_result': this.transactionResult()
-                    }
+                    'method': this.item.method
                 };
             },
 
-            getTransactionResults: function() {
-                return _.map(window.checkoutConfig.payment.oxipay_gateway.transactionResults, function(value, key) {
-                    return {
-                        'value': key,
-                        'transaction_result': value
-                    };
-                });
+            afterPlaceOrder: function () {
+                window.location.replace(url.build('oxipay/checkout/index'));
             },
 
-            continueToOxipay: function () {
-                $('#oxipayredirectform').submit();
-                //this.placeOrder();
+            /*
+             * This same validation is done server-side in InitializationRequest.validateQuote()
+             */
+            validate: function() {
+                var billingAddress = quote.billingAddress();
+                var shippingAddress = quote.shippingAddress();
+                var allowedCountries = self.getAllowedCountries();
+                var totals = quote.totals();
+                var allowedCountriesArray = [];
 
-                return false;
-            },
-			getFromOxipay: function() {
-                return window.checkoutConfig.payment.oxipay_gateway.form_oxipay;
-            },
-            getErrors: function()
-            {
-                if(window.checkoutConfig.payment.oxipay_gateway.errors)
-                    $('#payment-method-content .error-msg').show();
-                else
-                    $('#payment-method-content .error-msg').hide();
-                return window.checkoutConfig.payment.oxipay_gateway.errors;
-                            
-            },                       
-            afterPlaceOrder: function() {
+                if(typeof(allowedCountries) == 'string' && allowedCountries.length > 0){
+                    allowedCountriesArray = allowedCountries.split(',');
+                }
 
-                var geturl = url.build('oxipay/Outbound/Redirect')
-                $.ajax({
-                        url: geturl,
-                        method: "GET",
-                }).done(function (data) {
-                        var payload = data;
-                        document.getElementById('oxipayredirectform').action = payload['url'];
-                        $.each(payload['payload'], function(itemkey, itemvalue) {
-                            document.getElementById(itemkey).value = itemvalue;
-                        });
-                        document.getElementById('oxipayredirectform').submit();
-                });
+                self.messageContainer.clear();
+
+                if (!billingAddress) {
+                    self.messageContainer.addErrorMessage({'message': 'Please enter your billing address'});
+                    return false;
+                }
+
+                if (!billingAddress.firstname || 
+                    !billingAddress.lastname ||
+                    !billingAddress.street ||
+                    !billingAddress.city ||
+                    !billingAddress.postcode ||
+                    billingAddress.firstname.length == 0 ||
+                    billingAddress.lastname.length == 0 ||
+                    billingAddress.street.length == 0 ||
+                    billingAddress.city.length == 0 ||
+                    billingAddress.postcode.length == 0) {
+                    self.messageContainer.addErrorMessage({'message': 'Please enter your billing address details'});
+                    return false;
+                }
+
+                if (allowedCountriesArray.indexOf(billingAddress.countryId) == -1 ||
+                    allowedCountriesArray.indexOf(shippingAddress.countryId) == -1) {
+                    self.messageContainer.addErrorMessage({'message': 'Orders from this country are not supported by Oxipay. Please select a different payment option.'});
+                    return false;
+                }
+
+                if (totals.grand_total < 20) {
+                    self.messageContainer.addErrorMessage({'message': 'Oxipay doesn\'t support purchases less than $20.'});
+                    return false;
+                }
+
+                return true;
+            },
+
+            getTitle: function() {
+                return window.checkoutConfig.payment.oxipay_gateway.title;
+            },
+
+            getDescription: function() {
+                return window.checkoutConfig.payment.oxipay_gateway.description;
+            },
+            
+            getOxipayLogo:function(){
+                var logo = window.checkoutConfig.payment.oxipay_gateway.logo;
+
+                return logo;
+            },
+
+            getAllowedCountries: function() {
+                return window.checkoutConfig.payment.oxipay_gateway.allowed_countries;
             }
+
         });
     }
 );
