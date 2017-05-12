@@ -9,7 +9,6 @@ use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
 use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
@@ -28,20 +27,17 @@ final class ConfigProvider implements ConfigProviderInterface
 
     public function __construct(
     Config $gatewayConfig,
-    ScopeConfigInterface $configInterface,
     Session $customerSession,
     Quote $sessionQuote,
-    Action $action, 
     Context $context,
     Repository $assetRepo
     )
     {
         $this->_gatewayConfig = $gatewayConfig;
-        $this->_scopeConfigInterface = $configInterface;
+        $this->_scopeConfigInterface = $context->getScopeConfig();
         $this->customerSession = $customerSession;
         $this->sessionQuote = $sessionQuote;
-        $this->_urlBuilder = $context->getUrlBuilder();     
-        $this->action = $action;
+        $this->_urlBuilder = $context->getUrlBuilder();
         $this->_assetRepo = $assetRepo;
     }
 
@@ -52,7 +48,13 @@ final class ConfigProvider implements ConfigProviderInterface
             $logo = '../pub/media/sales/store/logo/' . $logoFile;
         }
         else{
-            $params = ['_secure' => $this->action->getRequest()->isSecure()];
+            /** @var $om \Magento\Framework\ObjectManagerInterface */
+            $om = \Magento\Framework\App\ObjectManager::getInstance();
+            /** @var $request \Magento\Framework\App\RequestInterface */
+            $request = $om->get('Magento\Framework\App\RequestInterface');
+            $params = array();
+            $params = array_merge(['_secure' => $request->isSecure()], $params);
+
             $logo = $this->_assetRepo->getUrlWithParams('Oxipay_OxipayPaymentGateway::images/oxipay_logo.png', $params);
         }
 
