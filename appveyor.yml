@@ -1,27 +1,29 @@
 branches:
   only:
     - master
-skip_tags: true
 environment:
-  release_name: "oxipay-magento-2.x_v%appveyor_build_version%.zip"
+  tag_name: "%APPVEYOR_REPO_TAG_NAME%"
+  release_name: "oxipay-magento-2.x_v%appveyor_repo_tag_name%.zip"
+before_build:
+  - ps: (Get-Content Oxipay/OxipayPaymentGateway/etc/module.xml).replace("3.0.0", $env:APPVEYOR_REPO_TAG_NAME ) | Set-Content Oxipay/OxipayPaymentGateway/etc/module.xml
 build_script:
   - ps: Invoke-Expression "7z a $env:release_name"
 artifacts:
   - path: $(release_name)
-    name: $(appveyor_build_version)
+    name: $(tag_name)
     type: zip
 deploy:
-  release: v$(appveyor_build_version)
-  description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
-  provider: GitHub
-  auth_token:
-    secure: QCrxkY9powLBL2oDJHrojEX1tnMXAo15QHSwWoklhhaVlnxwXjb9qAwIcquoA2kg
-  artifact: /.*\.zip/
-  draft: false
-  prerelease: false
-  on:
-    branch: master
-    appveyor_repo_tag: false
+  - provider: GitHub
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    release: v$(APPVEYOR_REPO_TAG_NAME)
+    description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
+    auth_token:
+      secure: QCrxkY9powLBL2oDJHrojEX1tnMXAo15QHSwWoklhhaVlnxwXjb9qAwIcquoA2kg
+    artifact: /.*\.zip/
+    draft: false
+    prerelease: false
+    on:
+      appveyor_repo_tag: true
 notifications:
   - provider: Email
     to:
