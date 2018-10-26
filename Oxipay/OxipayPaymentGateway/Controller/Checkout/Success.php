@@ -129,6 +129,7 @@ class Success extends AbstractAction {
          * Basically, if !config/can_capture and config/is_gateway and CAPTURE_OFFLINE and 
          * Payment.IsTransactionPending => pay (Invoice.STATE = STATE_PAID...)
          */
+        $invoice->setTransactionId($transactionId);
         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_OFFLINE);
         $invoice->register();
 
