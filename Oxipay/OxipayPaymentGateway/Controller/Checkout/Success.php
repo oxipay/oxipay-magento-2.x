@@ -64,6 +64,18 @@ class Success extends AbstractAction {
                 ->addStatusHistoryComment("Oxipay authorisation success. Transaction #$transactionId")
                 ->setIsCustomerNotified($emailCustomer);
 
+	        $payment = $order->getPayment();
+	        $payment->setTransactionId($transactionId);
+	        $transaction = $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
+//	        $transaction = $payment->addTransaction(Transaction::TYPE_AUTH, null, true);
+
+//	        $message = $this->authCommand->execute($payment, $amount, $payment->getOrder());
+	        $message = $payment->prependMessage("hahahaha");
+
+	        $payment->addTransactionCommentsToOrder($transaction, $message);
+
+	        $payment->save();
+
             $order->save();
 
             $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
