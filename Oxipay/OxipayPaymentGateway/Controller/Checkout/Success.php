@@ -66,16 +66,6 @@ class Success extends AbstractAction {
 
 	        $payment = $order->getPayment();
 	        $payment->setTransactionId($transactionId);
-	        $transaction = $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
-//	        $transaction = $payment->addTransaction(Transaction::TYPE_AUTH, null, true);
-
-//	        $message = $this->authCommand->execute($payment, $amount, $payment->getOrder());
-	        $message = $payment->prependMessage("hahahaha");
-
-	        $payment->addTransactionCommentsToOrder($transaction, $message);
-
-	        $payment->save();
-
             $order->save();
 
             $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
@@ -91,7 +81,6 @@ class Success extends AbstractAction {
             $this->getMessageManager()->addErrorMessage(__("There was an error in the Oxipay payment"));
             $this->_redirect('checkout/cart', array('_secure'=> false));
         }
-
     }
 
     private function statusExists($orderStatus)
