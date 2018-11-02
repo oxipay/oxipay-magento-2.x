@@ -64,6 +64,8 @@ class Success extends AbstractAction {
                 ->addStatusHistoryComment("Oxipay authorisation success. Transaction #$transactionId")
                 ->setIsCustomerNotified($emailCustomer);
 
+	        $payment = $order->getPayment();
+	        $payment->setTransactionId($transactionId);
             $order->save();
 
             $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
@@ -79,7 +81,6 @@ class Success extends AbstractAction {
             $this->getMessageManager()->addErrorMessage(__("There was an error in the Oxipay payment"));
             $this->_redirect('checkout/cart', array('_secure'=> false));
         }
-
     }
 
     private function statusExists($orderStatus)
@@ -117,6 +118,7 @@ class Success extends AbstractAction {
          * Basically, if !config/can_capture and config/is_gateway and CAPTURE_OFFLINE and 
          * Payment.IsTransactionPending => pay (Invoice.STATE = STATE_PAID...)
          */
+        $invoice->setTransactionId($transactionId);
         $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_OFFLINE);
         $invoice->register();
 

@@ -29,6 +29,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">OxipayPaymentGatewayInitializeCommand</item>
+                <item name="refund" xsi:type="string">OxipayPaymentGatewayRefundCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -42,6 +43,16 @@
         </arguments>
     </virtualType>
 
+    <!-- Refund command -->
+    <virtualType name="OxipayPaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">OxipayPaymentGatewayRefundRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
+            <argument name="handler" xsi:type="object">Oxipay\OxipayPaymentGateway\Model\OxipayPayment</argument>
+            <argument name="client" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Http\Client\RefundClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
+        </arguments>
+    </virtualType>
+
     <!-- Initialization Request -->
     <virtualType name="OxipayPaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
@@ -50,6 +61,16 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <!-- Refund Request -->
+    <virtualType name="OxipayPaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Oxipay\OxipayPaymentGateway\Gateway\Request\RefundRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
     <type name="Oxipay\OxipayPaymentGateway\Gateway\Request\InitializationRequest">
         <arguments>
             <argument name="config" xsi:type="object">Oxipay\OxipayPaymentGateway\Gateway\Config\Config</argument>
