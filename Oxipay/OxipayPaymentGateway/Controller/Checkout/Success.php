@@ -66,6 +66,7 @@ class Success extends AbstractAction {
 
 	        $payment = $order->getPayment();
 	        $payment->setTransactionId($transactionId);
+	        $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
             $order->save();
 
             $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
