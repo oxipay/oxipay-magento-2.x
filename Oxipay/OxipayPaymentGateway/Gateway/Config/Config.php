@@ -72,8 +72,33 @@ class Config extends \Magento\Payment\Gateway\Config\Config
         return $this->getValue(self::KEY_GATEWAY_URL);
     }
 
+	/**
+	 * get the Oxipay refund gateway Url
+	 * @return string
+	 */
+	public function getRefundUrl() {
+		$checkoutUrl = $this->getGatewayUrl();
+		if (strpos($checkoutUrl, ".co.nz") !== false){
+			$country_domain = '.co.nz';
+		} else {
+			$country_domain = '.com.au'; // default value
+		}
+
+		if (strpos($checkoutUrl, 'sandbox') === false) {
+			$isSandbox = false;
+		} else {
+			$isSandbox = true; //default value
+		}
+
+		if (!$isSandbox){
+			return 'https://portals.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
+		} else {
+			return 'https://portalssandbox.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
+		}
+	}
+
     /**
-     * Get Gateway URL
+     * Get API Key
      *
      * @return string
      */

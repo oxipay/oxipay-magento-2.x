@@ -43,7 +43,7 @@ class RefundRequest implements BuilderInterface
     public function build(array $buildSubject) {
     	$gateway_api_key = $this->_gatewayConfig->getApiKey();
     	$gateway_merchant_id = $this->_gatewayConfig->getMerchantNumber();
-    	$gateway_refund_gateway_url = "https://portalssandbox.oxipay.com.au/api/ExternalRefund/processrefund";
+    	$gateway_refund_gateway_url = $this->_gatewayConfig->getRefundUrl();
     	return [ 'GATEWAY_MERCHANT_ID'=>$gateway_merchant_id, 'GATEWAY_API_KEY' => $gateway_api_key, 'GATEWAY_REFUND_GATEWAY_URL'=>$gateway_refund_gateway_url ];
     }
 }
