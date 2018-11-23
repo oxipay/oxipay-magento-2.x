@@ -160,29 +160,4 @@ class Data extends AbstractHelper {
     {
         return $this->getStoreManager()->getStore()->getCode();
     }
-
-	/**
-	 * get the URL of the configured oxipay gateway checkout
-	 * @return string
-	 */
-	public static function getRefundUrl() {
-		$checkoutUrl = self::getCheckoutUrl();
-		if (strpos($checkoutUrl, ".co.nz") !== false){
-			$country_domain = '.co.nz';
-		} else {
-			$country_domain = '.com.au'; // default value
-		}
-
-		if (strpos($checkoutUrl, 'sandbox') === false) {
-			$isSandbox = false;
-		} else {
-			$isSandbox = true; //default value
-		}
-
-		if (!$isSandbox){
-			return 'https://portals.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
-		} else {
-			return 'https://portalssandbox.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
-		}
-	}
 }
