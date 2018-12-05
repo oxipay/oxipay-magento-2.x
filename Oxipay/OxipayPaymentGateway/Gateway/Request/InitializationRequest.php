@@ -89,6 +89,5 @@ class InitializationRequest implements BuilderInterface
         }
         
         return [ 'IGNORED' => [ 'IGNORED' ] ];
-
     }
 }

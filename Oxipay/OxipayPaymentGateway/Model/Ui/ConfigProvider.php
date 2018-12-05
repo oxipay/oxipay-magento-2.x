@@ -58,7 +58,6 @@ final class ConfigProvider implements ConfigProviderInterface
             $logo = $this->_assetRepo->getUrlWithParams('Oxipay_OxipayPaymentGateway::images/oxipay_logo.png', $params);
         }
 
-        //TODO: use Config
         $config = [
             'payment' => [
                 Config::CODE => [
@@ -72,5 +71,4 @@ final class ConfigProvider implements ConfigProviderInterface
 
         return $config;
     }
-
 }

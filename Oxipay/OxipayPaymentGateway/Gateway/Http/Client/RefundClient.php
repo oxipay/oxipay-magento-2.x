@@ -11,7 +11,7 @@ use Magento\Payment\Model\Method\Logger;
 
 class RefundClient implements ClientInterface {
     /**
-     * This is  the place where requests to the Payment Gateway API are placed.
+     * This is the place where requests to the Payment Gateway API are placed.
      * As we are a Redirect-based gateway and only used the "initialize" method, 
      * we don't place API invocations or requests to the Payment Gateway here.
      * TODO: check how to get rid of this, as the following error is raised
@@ -29,5 +29,4 @@ class RefundClient implements ClientInterface {
         $response = $transferObject->getBody();
 	    return $response;
     }
-
 }
