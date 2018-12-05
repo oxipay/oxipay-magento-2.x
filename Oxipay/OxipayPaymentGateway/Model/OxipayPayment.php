@@ -4,7 +4,7 @@ namespace Oxipay\OxipayPaymentGateway\Model;
 
 use Oxipay\OxipayPaymentGateway\Helper\Crypto;
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use \Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\LocalizedException;
 
 class OxipayPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
 {

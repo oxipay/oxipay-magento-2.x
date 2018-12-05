@@ -43,6 +43,7 @@ class Data extends AbstractHelper {
     protected $_localeResolver;
 
     /**
+     * @param \Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Payment\Helper\Data $paymentData
@@ -145,6 +146,7 @@ class Data extends AbstractHelper {
     }
 
     /**
+     * @param string
      * @return string
      */
     public function getCancelledUrl($orderId) {

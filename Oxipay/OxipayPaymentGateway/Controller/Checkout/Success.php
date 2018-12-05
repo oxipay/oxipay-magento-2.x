@@ -3,10 +3,6 @@
 namespace Oxipay\OxipayPaymentGateway\Controller\Checkout;
 
 use Magento\Sales\Model\Order;
-use Oxipay\OxipayPaymentGateway\Helper\Crypto;
-use Oxipay\OxipayPaymentGateway\Helper\Data;
-use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
-use Oxipay\OxipayPaymentGateway\Controller\Checkout\AbstractAction;
 
 /**
  * @package Oxipay\OxipayPaymentGateway\Controller\Checkout
@@ -18,7 +14,6 @@ class Success extends AbstractAction {
         $result = $this->getRequest()->get("x_result");
         $orderId = $this->getRequest()->get("x_reference");
         $transactionId = $this->getRequest()->get("x_gateway_reference");
-        $amount = $this->getRequest()->get("x_amount");
 
         if(!$isValid) {
             $this->getLogger()->debug('Possible site forgery detected: invalid response signature.');
@@ -120,7 +115,7 @@ class Success extends AbstractAction {
          * Payment.IsTransactionPending => pay (Invoice.STATE = STATE_PAID...)
          */
         $invoice->setTransactionId($transactionId);
-        $invoice->setRequestedCaptureCase(\Magento\Sales\Model\Order\Invoice::CAPTURE_OFFLINE);
+        $invoice->setRequestedCaptureCase(Order\Invoice::CAPTURE_OFFLINE);
         $invoice->register();
 
         $transaction = $this->getObjectManager()->create('Magento\Framework\DB\Transaction')
