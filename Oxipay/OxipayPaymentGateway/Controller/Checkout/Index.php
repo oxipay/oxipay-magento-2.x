@@ -3,10 +3,6 @@
 namespace Oxipay\OxipayPaymentGateway\Controller\Checkout;
 
 use Magento\Sales\Model\Order;
-use Oxipay\OxipayPaymentGateway\Helper\Crypto;
-use Oxipay\OxipayPaymentGateway\Helper\Data;
-use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
-use Oxipay\OxipayPaymentGateway\Controller\Checkout\AbstractAction;
 
 /**
  * @package Oxipay\OxipayPaymentGateway\Controller\Checkout

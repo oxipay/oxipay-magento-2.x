@@ -7,7 +7,6 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Http\Client;
 
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
-use Magento\Payment\Model\Method\Logger;
 
 class RefundClient implements ClientInterface {
     /**

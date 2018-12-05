@@ -17,7 +17,9 @@ class RefundRequest implements BuilderInterface
     private $_gatewayConfig;
 
     /**
-     * @param ConfigInterface $config
+     * @param Config $gatewayConfig
+     * @param LoggerInterface $logger
+     * @param Session $session
      */
     public function __construct(
         Config $gatewayConfig,

@@ -6,12 +6,10 @@ use Magento\Framework\App\Action\Action;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Sales\Model\OrderFactory;
-use Magento\Sales\Model\Order;
 use Oxipay\OxipayPaymentGateway\Helper\Crypto;
 use Oxipay\OxipayPaymentGateway\Helper\Data;
 use Oxipay\OxipayPaymentGateway\Helper\Checkout;
 use Oxipay\OxipayPaymentGateway\Gateway\Config\Config;
-use Magento\Framework\Message\ManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
