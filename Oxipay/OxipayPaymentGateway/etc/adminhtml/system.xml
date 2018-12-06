@@ -45,8 +45,9 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="automatic_invoice" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Automatic Invoice</label>
+                    <label>Automatic Invoice (for refunding, must be enabled)</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip>If disabled, online refunding in Magento with Oxipay will not be possible.</tooltip>
                 </field>
                 <field id="email_customer" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Email Customer</label>

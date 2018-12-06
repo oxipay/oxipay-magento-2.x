@@ -4,11 +4,11 @@
  * Country config field renderer
  */
 
-use Magento\Directory\Model\Config\Source\Country;
- 
 namespace Oxipay\OxipayPaymentGateway\Model\Config\Source;
 
-class RestrictedCountry extends \Magento\Directory\Model\Config\Source\Country 
+use Magento\Directory\Model\Config\Source\Country;
+
+class RestrictedCountry extends Country
 {
     /**
      * @param \Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection

@@ -34,6 +34,7 @@ class Checkout
      * Cancel last placed order with specified comment message
      *
      * @param string $comment Comment appended to order history
+     * @throws \Magento\Framework\Exception\LocalizedException
      * @return bool True if order cancelled, false otherwise
      */
     public function cancelCurrentOrder($comment)

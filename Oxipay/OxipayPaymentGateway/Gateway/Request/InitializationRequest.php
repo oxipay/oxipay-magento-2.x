@@ -19,7 +19,9 @@ class InitializationRequest implements BuilderInterface
     private $_gatewayConfig;
 
     /**
-     * @param ConfigInterface $config
+     * @param Config $gatewayConfig
+     * @param LoggerInterface $logger
+     * @param Session $session
      */
     public function __construct(
         Config $gatewayConfig,
@@ -33,7 +35,8 @@ class InitializationRequest implements BuilderInterface
 
     /**
      * Checks the quote for validity
-     * @throws Mage_Api_Exception
+     * @param OrderAdapter $order
+     * @return bool;
      */
     private function validateQuote(OrderAdapter $order) {
         if($order->getGrandTotalAmount() < 20) {
@@ -89,6 +92,5 @@ class InitializationRequest implements BuilderInterface
         }
         
         return [ 'IGNORED' => [ 'IGNORED' ] ];
-
     }
 }

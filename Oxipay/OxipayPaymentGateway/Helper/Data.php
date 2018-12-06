@@ -9,6 +9,7 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Locale\ResolverInterface;
 use Magento\Payment\Helper\Data as PaymentData;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Oxipay_Oxipayments_Helper_Data
@@ -43,6 +44,7 @@ class Data extends AbstractHelper {
     protected $_localeResolver;
 
     /**
+     * @param \Oxipay\OxipayPaymentGateway\Gateway\Config\Config $gatewayConfig
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Payment\Helper\Data $paymentData
@@ -138,6 +140,7 @@ class Data extends AbstractHelper {
     }
 
     /**
+     * @throws NoSuchEntityException If given store doesn't exist.
      * @return string
      */
     public function getCompleteUrl() {
@@ -145,6 +148,8 @@ class Data extends AbstractHelper {
     }
 
     /**
+     * @param string
+     * @throws NoSuchEntityException If given store doesn't exist.
      * @return string
      */
     public function getCancelledUrl($orderId) {
@@ -153,12 +158,11 @@ class Data extends AbstractHelper {
 
     /**
      * Get Store code
-     *
+     * @throws NoSuchEntityException If given store doesn't exist.
      * @return string
      */
     public function getStoreCode()
     {
         return $this->getStoreManager()->getStore()->getCode();
     }
-    
 }

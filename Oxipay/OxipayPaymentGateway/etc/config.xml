@@ -9,7 +9,7 @@
     <default>
         <payment>
             <oxipay_gateway>
-                <model>OxipayPaymentGatewayFacade</model>       
+                <model>OxipayPaymentGatewayFacade</model>
                 <title>Oxipay</title>
                 <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
                 <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
@@ -17,18 +17,18 @@
                 <!--<order_status>processing</order_status>--> <!--We set the order status in InitializationRequest-->
                 <description>Pay the easier way</description>
                 <api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
-                <gateway_url>https://secure.oxipay.com.au/Checkout?platform=default</gateway_url>
+                <gateway_url>https://securesandbox.oxipay.com.au/Checkout?platform=default</gateway_url>
                 <specificcountry>AU,NZ</specificcountry>
                 <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
-                <can_capture_partial>0</can_capture_partial>
+                <can_capture_partial>1</can_capture_partial>
                 <can_authorize_vault>0</can_authorize_vault>
-                <can_capture_vault>0</can_capture_vault>
+                <can_capture_vault>1</can_capture_vault>
                 <can_use_internal>0</can_use_internal>
-                <can_refund_partial_per_invoice>0</can_refund_partial_per_invoice>
-                <can_refund>0</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
                 <can_void>0</can_void>
                 <can_cancel>0</can_cancel>
                 <can_edit>0</can_edit>

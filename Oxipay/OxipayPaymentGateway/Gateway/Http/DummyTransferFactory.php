@@ -27,7 +27,7 @@ class DummyTransferFactory implements TransferFactoryInterface
 
     /**
     * 
-     * This is  the place where the transfer objects for the the Payment Gateway 
+     * This is the place where the transfer objects for the the Payment Gateway
      * API requests are created. As we are a Redirect-based gateway and only used 
      * the "initialize" method, we don't place API invocations or requests to the 
      * Payment Gateway, so we don't need a transfer object.

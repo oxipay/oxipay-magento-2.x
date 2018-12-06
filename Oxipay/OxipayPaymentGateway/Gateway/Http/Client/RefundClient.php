@@ -8,7 +8,7 @@ namespace Oxipay\OxipayPaymentGateway\Gateway\Http\Client;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-class DummyClient implements ClientInterface {
+class RefundClient implements ClientInterface {
     /**
      * This is the place where requests to the Payment Gateway API are placed.
      * As we are a Redirect-based gateway and only used the "initialize" method, 
@@ -25,7 +25,7 @@ class DummyClient implements ClientInterface {
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $response = [ 'IGNORED' => [ 'IGNORED' ] ];
-        return $response;
+        $response = $transferObject->getBody();
+	    return $response;
     }
 }
