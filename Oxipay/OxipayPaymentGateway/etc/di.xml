@@ -97,4 +97,6 @@
         </arguments>
     </type>
 
+    <preference for="\Magento\Sales\Model\Order\Email\Sender\OrderSender" type="Oxipay\OxipayPaymentGateway\Model\Order\Email\Sender\OrderSender"/>
+
 </config>
