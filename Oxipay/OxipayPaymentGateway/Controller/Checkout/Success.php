@@ -64,6 +64,10 @@ class Success extends AbstractAction {
 	        $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
             $order->save();
 
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $emailSender = $objectManager->create('\Magento\Sales\Model\Order\Email\Sender\OrderSender');
+            $emailSender->send($order);
+
             $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
             if ($invoiceAutomatically) {
                 $this->invoiceOrder($order, $transactionId);
