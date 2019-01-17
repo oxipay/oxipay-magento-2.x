@@ -64,6 +64,16 @@ class Config extends \Magento\Payment\Gateway\Config\Config
     }
 
     /**
+     * Is store in Australia
+     * @return bool
+     */
+    public function isAus()
+    {
+        $checkoutUrl = $this->getGatewayUrl();
+        return strpos($checkoutUrl, ".co.nz") ? false : true;
+    }
+
+    /**
      * Get Gateway URL
      *
      * @return string
@@ -77,12 +87,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
 	 * @return string
 	 */
 	public function getRefundUrl() {
-		$checkoutUrl = $this->getGatewayUrl();
-		if (strpos($checkoutUrl, ".co.nz") !== false){
-			$country_domain = '.co.nz';
-		} else {
-			$country_domain = '.com.au'; // default value
-		}
+    	$country_domain = $this->isAus() ? '.com.au' : '.co.nz';
 
 		if (strpos($checkoutUrl, 'sandbox') === false) {
 			$isSandbox = false;

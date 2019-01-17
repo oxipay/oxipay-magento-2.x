@@ -18,36 +18,41 @@ class Index extends AbstractAction {
         $shippingAddress = $order->getShippingAddress();
         $billingAddress = $order->getBillingAddress();
 
-        $billingAddressParts = explode(PHP_EOL, $billingAddress->getData('street'));
-        $shippingAddressParts = explode(PHP_EOL, $shippingAddress->getData('street'));
+        $billingAddressParts = preg_split('/\r\n|\r|\n/', $billingAddress->getData('street'));
+        $shippingAddressParts = preg_split('/\r\n|\r|\n/', $shippingAddress->getData('street'));
 
         $orderId = $order->getRealOrderId();
         $data = array(
-            'x_currency' => str_replace(PHP_EOL, ' ', $order->getOrderCurrencyCode()),
-            'x_url_callback' => str_replace(PHP_EOL, ' ', $this->getDataHelper()->getCompleteUrl()),
-            'x_url_complete' => str_replace(PHP_EOL, ' ', $this->getDataHelper()->getCompleteUrl()),
-            'x_url_cancel' => str_replace(PHP_EOL, ' ', $this->getDataHelper()->getCancelledUrl($orderId)),
-            'x_shop_name' => str_replace(PHP_EOL, ' ', $this->getDataHelper()->getStoreCode()),
-            'x_account_id' => str_replace(PHP_EOL, ' ', $this->getGatewayConfig()->getMerchantNumber()),
-            'x_reference' => str_replace(PHP_EOL, ' ', $orderId),
-            'x_invoice' => str_replace(PHP_EOL, ' ', $orderId),
-            'x_amount' => str_replace(PHP_EOL, ' ', $order->getTotalDue()),
-            'x_customer_first_name' => str_replace(PHP_EOL, ' ', $order->getCustomerFirstname()),
-            'x_customer_last_name' => str_replace(PHP_EOL, ' ', $order->getCustomerLastname()),
-            'x_customer_email' => str_replace(PHP_EOL, ' ', $order->getData('customer_email')),
-            'x_customer_phone' => str_replace(PHP_EOL, ' ', $billingAddress->getData('telephone')),
+            'x_currency' => $order->getOrderCurrencyCode(),
+            'x_url_callback' => $this->getDataHelper()->getCompleteUrl(),
+            'x_url_complete' => $this->getDataHelper()->getCompleteUrl(),
+            'x_url_cancel' => $this->getDataHelper()->getCancelledUrl($orderId),
+            'x_shop_name' => $this->getDataHelper()->getStoreCode(),
+            'x_account_id' => $this->getGatewayConfig()->getMerchantNumber(),
+            'x_reference' => $orderId,
+            'x_invoice' => $orderId,
+            'x_amount' => $order->getTotalDue(),
+            'x_customer_first_name' => $order->getCustomerFirstname(),
+            'x_customer_last_name' => $order->getCustomerLastname(),
+            'x_customer_email' => $order->getData('customer_email'),
+            'x_customer_phone' => $billingAddress->getData('telephone'),
             'x_customer_billing_address1' => $billingAddressParts[0],
             'x_customer_billing_address2' => count($billingAddressParts) > 1 ? $billingAddressParts[1] : '',
-            'x_customer_billing_city' => str_replace(PHP_EOL, ' ', $billingAddress->getData('city')),
-            'x_customer_billing_state' => str_replace(PHP_EOL, ' ', $billingAddress->getData('region')),
-            'x_customer_billing_zip' => str_replace(PHP_EOL, ' ', $billingAddress->getData('postcode')),
+            'x_customer_billing_city' => $billingAddress->getData('city'),
+            'x_customer_billing_state' => $billingAddress->getData('region'),
+            'x_customer_billing_zip' => $billingAddress->getData('postcode'),
             'x_customer_shipping_address1' => $shippingAddressParts[0],
             'x_customer_shipping_address2' => count($shippingAddressParts) > 1 ? $shippingAddressParts[1] : '',
-            'x_customer_shipping_city' => str_replace(PHP_EOL, ' ', $shippingAddress->getData('city')),
-            'x_customer_shipping_state' => str_replace(PHP_EOL, ' ', $shippingAddress->getData('region')),
-            'x_customer_shipping_zip' => str_replace(PHP_EOL, ' ', $shippingAddress->getData('postcode')),
+            'x_customer_shipping_city' => $shippingAddress->getData('city'),
+            'x_customer_shipping_state' => $shippingAddress->getData('region'),
+            'x_customer_shipping_zip' => $shippingAddress->getData('postcode'),
             'x_test' => 'false'
         );
+
+        foreach ($data as $key => $value) {
+            $data[$key] = preg_replace('/\r\n|\r|\n/', ' ', $value);
+        }
+
         $apiKey = $this->getGatewayConfig()->getApiKey();
         $signature = $this->getCryptoHelper()->generateSignature($data, $apiKey);
         $data['x_signature'] = $signature;
