@@ -98,7 +98,7 @@
     </type>
 
     <type name="\Magento\Sales\Model\Order\Email\Sender\OrderSender">
-        <plugin name="Oxipay-OrderSender-Plugin" type="Oxipay\OxipayPaymentGateway\Plugin\OrderSender" />
+        <plugin name="Oxipay-OrderSender-Plugin" type="Oxipay\OxipayPaymentGateway\Plugin\OrderSenderPlugin" />
     </type>
 
 </config>
