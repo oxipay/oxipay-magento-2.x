@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxipay\OxipayPaymentGateway\Plugin\OrderSenderPlugin;
+namespace Oxipay\OxipayPaymentGateway\Plugin;
 
 use Magento\Sales\Model\Order;
 
@@ -10,7 +10,7 @@ class OrderSenderPlugin
     {
         $payment = $order->getPayment()->getMethodInstance()->getCode();
 
-        if($payment === 'oxipay_gateway' && $order->getState() === 'pending_payment'){
+        if($payment === 'oxipay_gateway' && $order->getState() !== 'processing'){
             return false;
         }
 
