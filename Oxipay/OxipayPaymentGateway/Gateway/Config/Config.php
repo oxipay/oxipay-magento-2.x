@@ -87,7 +87,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
 	 * @return string
 	 */
 	public function getRefundUrl() {
-    	$country_domain = $this->isAus() ? '.com.au' : '.co.nz';
+        $checkoutUrl = $this->isAus() ? '.com.au' : '.co.nz';
 
 		if (strpos($checkoutUrl, 'sandbox') === false) {
 			$isSandbox = false;
@@ -96,9 +96,9 @@ class Config extends \Magento\Payment\Gateway\Config\Config
 		}
 
 		if (!$isSandbox){
-			return 'https://portals.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
+			return 'https://portals.oxipay'.$checkoutUrl.'/api/ExternalRefund/processrefund';
 		} else {
-			return 'https://portalssandbox.oxipay'.$country_domain.'/api/ExternalRefund/processrefund';
+			return 'https://portalssandbox.oxipay'.$checkoutUrl.'/api/ExternalRefund/processrefund';
 		}
 	}
 
